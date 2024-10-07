@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
 
+
         if (canMove)
         {
             horizontalInput = Input.GetAxisRaw("Horizontal");
