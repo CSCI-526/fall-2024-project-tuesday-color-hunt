@@ -54,7 +54,6 @@ public class Light : MonoBehaviour
 
             print("collides");
             collidedObjectName = collision.gameObject.name;
-            //string collidedObjectTag = collision.gameObject.tag;
         }
     }
 
