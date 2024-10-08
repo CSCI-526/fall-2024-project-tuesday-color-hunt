@@ -13,6 +13,8 @@ public class LightParent : MonoBehaviour
     private bool isGrabbing = false;
     [SerializeField] private Transform grabPosition;
 
+    private PlayerMovement pm;
+
     void Start()
     {
         lightShades = transform.Find("LightShades").gameObject;
@@ -20,6 +22,7 @@ public class LightParent : MonoBehaviour
         lightRing = transform.Find("LightRing").gameObject;
         lightShades.SetActive(false);
         lightRing.SetActive(false);
+        pm = FindObjectOfType<PlayerMovement>();
     }
 
     void Update()
@@ -40,19 +43,19 @@ public class LightParent : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.K) && !isGrabbing && playerTouched) 
+        if (Input.GetKey(KeyCode.K) && !pm.isGrabbing && playerTouched) 
         {
             transform.parent = grabPosition;
             transform.position = grabPosition.position;
             lightSwitch.GetComponent<Rigidbody2D>().isKinematic = true; // No gravity
-            isGrabbing = true; 
+            pm.isGrabbing = true; 
         }
-        else if (!Input.GetKey(KeyCode.K) && isGrabbing && playerTouched) 
+        else if (!Input.GetKey(KeyCode.K) && pm.isGrabbing && playerTouched) 
         {
             transform.parent = null;
             transform.position = transform.position;
             lightSwitch.GetComponent<Rigidbody2D>().isKinematic = false; // No gravity
-            isGrabbing = false; 
+            pm.isGrabbing = false; 
         }
     }
 }

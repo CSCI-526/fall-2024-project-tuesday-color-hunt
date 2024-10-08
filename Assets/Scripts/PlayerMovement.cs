@@ -38,6 +38,9 @@ public class PlayerMovement : MonoBehaviour
 
     private Camera mainCamera;
 
+    public bool isGrabbing = false;
+
+
     // Start is called before the first frame update
     private void Awake()
     {

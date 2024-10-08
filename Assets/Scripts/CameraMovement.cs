@@ -12,7 +12,7 @@ public class CameraMovement : MonoBehaviour
 
     [SerializeField] private Transform target;
     private Camera mainCamera;
-    private List<GameObject> objectsToBeDisappered;
+    //private List<GameObject> objectsToBeDisappered;
     [SerializeField] public StageClear sc;
 
     // Start is called before the first frame update
@@ -21,14 +21,14 @@ public class CameraMovement : MonoBehaviour
         mainCamera = Camera.main;
         mainCamera.backgroundColor = Color.black;
 
-        objectsToBeDisappered = new List<GameObject>();
+        //objectsToBeDisappered = new List<GameObject>();
 
         GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
-        objectsToBeDisappered.AddRange(walls);
+        //objectsToBeDisappered.AddRange(walls);
 
         // Find all GameObjects with the tag "Ground" and add them to the list
         GameObject[] grounds = GameObject.FindGameObjectsWithTag("Ground");
-        objectsToBeDisappered.AddRange(grounds);
+        //objectsToBeDisappered.AddRange(grounds);
 
     }
 
@@ -36,6 +36,7 @@ public class CameraMovement : MonoBehaviour
     void Update()
     {
 
+        /*
         Color backgroundColor = mainCamera.backgroundColor;
 
         // Convert the color to RGB values
@@ -64,7 +65,7 @@ public class CameraMovement : MonoBehaviour
             {
                 obj.SetActive(true);
             }
-        }
+        }*/
 
         /*
         if (CompareColorWithRGB(mainCamera.backgroundColor, 100, 100, 100))
@@ -76,6 +77,7 @@ public class CameraMovement : MonoBehaviour
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
     }
 
+    /*
     public bool CompareColors(Color color1, Color color2)
     {
         // Compare the colors with a small tolerance to account for floating-point precision issues
@@ -152,5 +154,5 @@ public class CameraMovement : MonoBehaviour
 
         // Set the new mixed color as the camera's background color
         mainCamera.backgroundColor = new Color(normalizedR, normalizedG, normalizedB);
-    }
+    }*/
 }

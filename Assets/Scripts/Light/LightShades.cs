@@ -1,16 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class LightShades : MonoBehaviour
 {
-    private CameraMovement cm;
-    private string collidedObjectName;
+    private ColorControl cc;
+    private Color defaultColor;
+    private SpriteRenderer spriteRenderer;
 
     void Start()
     {
-        cm = FindObjectOfType<CameraMovement>();
+        cc = FindObjectOfType<ColorControl>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        defaultColor = spriteRenderer.color;
     }
 
     void Update()
@@ -20,22 +25,58 @@ public class LightShades : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collidedObjectName = collision.gameObject.name;
+        string collidedObjectName = collision.gameObject.name;
         GameObject foundObject = GameObject.Find(collidedObjectName);
 
         if (foundObject != null)
         {
             Color objectColor = foundObject.GetComponent<SpriteRenderer>().color;
 
-            if ((collision.CompareTag("Enemy") || collision.CompareTag("Obstacle")) && cm.CompareColors(objectColor, GetComponent<SpriteRenderer>().color))
+            if ((collision.CompareTag("Enemy") || collision.CompareTag("Obstacle")) && cc.CompareColors(objectColor, spriteRenderer.color))
             {
                 foundObject.SetActive(false);
+            }
+            
+            if (collision.CompareTag("LightSwitch") && !cc.CompareColors(objectColor, defaultColor))
+            {
+                print($"current color applied: {spriteRenderer.color}");
+                spriteRenderer.color = cc.AddColor(objectColor, defaultColor);
+                print($"New color applied: {spriteRenderer.color}");
             }
         }
     }
 
+    /*
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        string collidedObjectName = collision.gameObject.name;
+        GameObject foundObject = GameObject.Find(collidedObjectName);
+        if (foundObject != null)
+        {
+            Color objectColor = foundObject.GetComponent<SpriteRenderer>().color;
+
+            if (collision.CompareTag("LightSwitch") && !cc.CompareColors(objectColor, spriteRenderer.color))
+            {
+                print("light collided!");
+                spriteRenderer.color = cc.AddColor(objectColor, defaultColor);
+            }
+        }
+    }*/
+
+
     private void OnTriggerExit2D(Collider2D collision)
     {
-        
+        string collidedObjectName = collision.gameObject.name;
+        GameObject foundObject = GameObject.Find(collidedObjectName);
+
+        if (foundObject != null)
+        {
+            Color objectColor = foundObject.GetComponent<SpriteRenderer>().color;
+
+            if (collision.CompareTag("LightSwitch") && !cc.CompareColors(objectColor, defaultColor))
+            {
+                spriteRenderer.color = cc.MinusColor(objectColor, defaultColor);
+            }
+        }
     }
 }
