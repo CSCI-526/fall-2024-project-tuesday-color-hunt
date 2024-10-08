@@ -32,7 +32,7 @@ public class LightShades : MonoBehaviour
         {
             Color objectColor = foundObject.GetComponent<SpriteRenderer>().color;
 
-            if ((collision.CompareTag("Enemy") || collision.CompareTag("Obstacle")) && cc.CompareColors(objectColor, spriteRenderer.color))
+            if ((collision.CompareTag("Enemy") || collision.CompareTag("Obstacle")) && cc.CompareColors(objectColor, GetComponent<SpriteRenderer>().color))
             {
                 foundObject.SetActive(false);
             }

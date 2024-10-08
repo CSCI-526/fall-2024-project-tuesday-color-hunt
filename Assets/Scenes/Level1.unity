@@ -199,6 +199,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   startPosition: {fileID: 953060209}
+  isGrabbing: 0
 --- !u!50 &105492194
 Rigidbody2D:
   serializedVersion: 4
@@ -379,12 +380,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afcd147ec85245049959bbdd6fa04ffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grabDetect: {fileID: 1950535886}
-  grabPosition: {fileID: 1920333262}
-  rayDist: 1
-  lighted: 0
-  isGrabbing: 0
-  light: {fileID: 0}
 --- !u!1 &134789908
 GameObject:
   m_ObjectHideFlags: 0
@@ -1043,6 +1038,7 @@ GameObject:
   - component: {fileID: 327318361}
   - component: {fileID: 327318360}
   - component: {fileID: 327318363}
+  - component: {fileID: 327318364}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1138,6 +1134,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 105492197}
   sc: {fileID: 1487566129}
+--- !u!114 &327318364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327318359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb033494f05b64d40b09019756adfd4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &367355989
 GameObject:
   m_ObjectHideFlags: 0
