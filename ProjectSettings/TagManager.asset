@@ -8,7 +8,12 @@ TagManager:
   - Enemy
   - Bullet
   - Wall
+  - Obstacle
+  - LightShades
+  - LightSwitch
+  - LightRing
   - Light
+  - Outline
   layers:
   - Default
   - TransparentFX
@@ -18,9 +23,9 @@ TagManager:
   - UI
   - Ground
   - Wall
-  - Light
-  - 
-  - 
+  - LightShades
+  - Enemy
+  - LightRing
   - 
   - 
   - 

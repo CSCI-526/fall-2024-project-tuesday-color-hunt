@@ -1,68 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class Light : MonoBehaviour
 {
-    // Reference to the Main Camera
-    private Camera mainCamera;
-    private CameraMovement cm;
-    private PlayerMovement pm;
+    [SerializeField] private Transform grabPosition;
+    private GameObject lightShades;
+    public bool playerTouched = false;
+    private bool lighted = false;
+    private bool isGrabbing = false;
 
-    public bool lighted = false;
-    [SerializeField] private int r;
-    [SerializeField] private int g;
-    [SerializeField] private int b;
-
-    private bool isInTrigger = false;
-
-    private GameObject light;
-    private string collidedObjectName;
-
-    // Start is called before the first frame update
     void Start()
     {
-        // Get reference to the main camera at the start
-        mainCamera = Camera.main;
-        cm = FindObjectOfType<CameraMovement>();
-        light = transform.Find("LightShades").gameObject;
-        light.SetActive(false);
+        lightShades = transform.Find("LightShades").gameObject;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (isInTrigger)
+        if (playerTouched)
         {
-            GameObject foundObject = GameObject.Find(collidedObjectName);
-            Color objectColor = foundObject.GetComponent<SpriteRenderer>().color;
-
-            if (cm.CompareColors(objectColor, GetComponent<SpriteRenderer>().color))
+            if (Input.GetKeyDown(KeyCode.L))
             {
-                foundObject.SetActive(false);
+                if (lighted)
+                {
+                    lighted = false;
+                    lightShades.SetActive(false);
+                }
+                else
+                {
+                    lighted = true;
+                    lightShades.SetActive(true);
+                }
             }
+
+            if (Input.GetKey(KeyCode.K) && !isGrabbing) // Only allow grabbing if not already grabbing
+            {
+                transform.parent= grabPosition;
+                transform.position = grabPosition.position;
+                GetComponent<Rigidbody2D>().isKinematic = true; // No gravity
+                isGrabbing = true;
+            }
+            else if (!Input.GetKey(KeyCode.K) && isGrabbing) // Release the object when 'K' is released
+            {
+                transform.parent = null;
+                GetComponent<Rigidbody2D>().isKinematic = false;
+                isGrabbing = false;
+            }
+
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Obstacle")) 
-        {
-            isInTrigger = true;
-
-            print("collides");
-            collidedObjectName = collision.gameObject.name;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Obstacle"))
-        {
-            isInTrigger = false;
-        }
-
-    }
+   
 }

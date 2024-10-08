@@ -4,28 +4,128 @@ using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public float speed = 2f;
-    public Rigidbody2D rb;
-    public LayerMask groundLayers;
-    public Transform groundCheck;
-    bool isFacingRight = true;
-    RaycastHit2D hit;
-    private void Update()
+    [SerializeField] private float moveSpeed = 3f;
+    [SerializeField] private float detectionRange = 3f; 
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask wallLayer;
+    [SerializeField] private LayerMask lightRingLayer;
+    [SerializeField] private LayerMask lightShadesLayer;
+
+    private bool movingRight = true;
+    [SerializeField] private Transform groundCheck; 
+    [SerializeField] private Transform wallCheck;
+    [SerializeField] private Transform player; 
+
+    private Rigidbody2D rb;
+
+    private bool isChasingPlayer = false;
+    public bool enemyInsideDome = false;
+    //public bool enemyhitLightRing = false;
+
+    void Start()
     {
-        hit = Physics2D.Raycast(groundCheck.position, -transform.up, 1f, groundLayers);
+        rb = GetComponent<Rigidbody2D>();
     }
-     private void FixedUpdate()
+
+    void Update()
     {
-        if (hit.collider != false) {
-            if (isFacingRight) {
-                rb.velocity = new Vector2(speed, rb.velocity.y);
-            } else {
-                rb.velocity = new Vector2(-speed, rb.velocity.y);
-            }
-        } else {
-            isFacingRight = !isFacingRight;
-            transform.localScale = new Vector3(-transform.localScale.x, 1f, 1f);
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+        if (distanceToPlayer <= detectionRange)
+        {
+            isChasingPlayer = true;
         }
-    } 
+        else
+        {
+            isChasingPlayer = false;
+        }
+
+        //bool hitLightRing = Physics2D.OverlapCircle(groundCheck.position, 0.1f, lightRingLayer);
+        //if (enemyhitLightRing)
+        //{
+          //  print("hit ring");
+           // Flip();
+      //  }
+
+        if (!isChasingPlayer)
+        {
+            Patrol();
+        }
+        else
+        {
+            ChasePlayer();
+        }
+    }
+
+    private void Patrol()
+    {
+        rb.velocity = new Vector2(moveSpeed * (movingRight ? 1 : -1), rb.velocity.y);
+
+        if (atEdge() || hittingWall() || (hittingRing() && !hittingShades()))
+        {
+            Flip();
+        }
+    }
+
+    private void ChasePlayer()
+    {
+        Vector2 direction = (player.position - transform.position).normalized;
+        rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
+
+        if (atEdge() || hittingWall() || (hittingRing() && !hittingShades()))
+        {
+            Flip();
+        }
+
+        if (direction.x > 0 && !movingRight)
+        {
+            Flip();
+        }
+        else if (direction.x < 0 && movingRight)
+        {
+            Flip();
+        }
+    }
+
+    private bool atEdge()
+    {
+        return !Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
+    }
+
+    private bool hittingWall()
+    {
+        return Physics2D.OverlapCircle(wallCheck.position, 0.1f, wallLayer);
+    }
+
+    
+    private bool hittingRing()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, 0.1f, lightRingLayer);
+    }
+
+    private bool hittingShades()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, 0.1f, lightShadesLayer);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            Flip();
+        }
+    }
+
+    private void Flip()
+    {
+        movingRight = !movingRight;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1;
+        transform.localScale = localScale;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+    }
 }
