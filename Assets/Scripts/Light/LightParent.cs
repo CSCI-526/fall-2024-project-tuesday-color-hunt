@@ -10,7 +10,6 @@ public class LightParent : MonoBehaviour
 
     private bool lighted = false;
     public bool playerTouched = false;
-    private bool isGrabbing = false;
     [SerializeField] private Transform grabPosition;
 
     private PlayerMovement pm;

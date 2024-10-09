@@ -14,8 +14,7 @@ public class LightShades : MonoBehaviour
     void Start()
     {
         cc = FindObjectOfType<ColorControl>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        defaultColor = spriteRenderer.color;
+        defaultColor = GetComponent<SpriteRenderer>().color;
     }
 
     void Update()
@@ -32,16 +31,15 @@ public class LightShades : MonoBehaviour
         {
             Color objectColor = foundObject.GetComponent<SpriteRenderer>().color;
 
-            if ((collision.CompareTag("Enemy") || collision.CompareTag("Obstacle")) && cc.CompareColors(objectColor, spriteRenderer.color))
+            if ((collision.CompareTag("Enemy") || collision.CompareTag("Obstacle")) && cc.CompareColors(objectColor, GetComponent<SpriteRenderer>().color))
             {
                 foundObject.SetActive(false);
             }
             
             if (collision.CompareTag("LightSwitch") && !cc.CompareColors(objectColor, defaultColor))
             {
-                print($"current color applied: {spriteRenderer.color}");
-                spriteRenderer.color = cc.AddColor(objectColor, defaultColor);
-                print($"New color applied: {spriteRenderer.color}");
+                // GetComponent<SpriteRenderer>().color = cc.AddColor(objectColor, defaultColor);
+                GetComponent<SpriteRenderer>().color = Color.black;
             }
         }
     }
@@ -75,7 +73,7 @@ public class LightShades : MonoBehaviour
 
             if (collision.CompareTag("LightSwitch") && !cc.CompareColors(objectColor, defaultColor))
             {
-                spriteRenderer.color = cc.MinusColor(objectColor, defaultColor);
+               // GetComponent<SpriteRenderer>().color = cc.MinusColor(objectColor, defaultColor);
             }
         }
     }
