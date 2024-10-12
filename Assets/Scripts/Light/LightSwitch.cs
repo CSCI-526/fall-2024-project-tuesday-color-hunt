@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class LightSwitch : MonoBehaviour
@@ -12,6 +14,9 @@ public class LightSwitch : MonoBehaviour
     // Store the original colors
     private Color originalLightShadesColor;
     private Color originalLightRingColor;
+    private List<GameObject> lightSwitches = new List<GameObject>();
+    private List<Color> colorsToBeAdded = new List<Color>();
+    private List<GameObject> lightSwitchesToBeAdded = new List<GameObject>();
 
     void Start()
     {
@@ -23,10 +28,66 @@ public class LightSwitch : MonoBehaviour
         // Initialize original colors
         originalLightShadesColor = lightShades.GetComponent<SpriteRenderer>().color;
         originalLightRingColor = lightRing.GetComponent<SpriteRenderer>().color;
+
+        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.name == "LightSwitch")
+            {
+                lightSwitches.Add(obj);
+            }
+        }
     }
 
     void Update()
     {
+        float ringRadius = 5.1f;
+        foreach (GameObject lightSwitch in lightSwitches)
+        {
+            Vector3 otherLightCenter = lightSwitch.transform.position;
+            Vector3 currentLightCenter = transform.position;
+            float distance = Vector3.Distance(otherLightCenter, currentLightCenter);
+
+            if (distance <= ringRadius) 
+            {
+                if (!colorsToBeAdded.Contains(lightSwitch.GetComponent<SpriteRenderer>().color))
+                {
+                    if (!cc.CompareColors(lightSwitch.GetComponent<SpriteRenderer>().color, GetComponent<SpriteRenderer>().color))
+                    {
+                        colorsToBeAdded.Add(lightSwitch.GetComponent<SpriteRenderer>().color);
+                        lightSwitchesToBeAdded.Add(lightSwitch);
+                    }
+                }
+            }
+
+        }
+
+        for (int i = 0; i < lightSwitchesToBeAdded.Count; i++)
+        {
+            GameObject lightSwitch = lightSwitchesToBeAdded[i];
+            Vector3 otherLightCenter = lightSwitch.transform.position;
+            Vector3 currentLightCenter = transform.position;
+            float distance = Vector3.Distance(otherLightCenter, currentLightCenter);
+
+            if (distance > ringRadius)
+            {
+                colorsToBeAdded.Remove(lightSwitch.GetComponent<SpriteRenderer>().color);
+                lightSwitchesToBeAdded.Remove(lightSwitch);
+            }
+        }
+
+        lightShades.GetComponent<SpriteRenderer>().color = UpdateColor();
+        lightRing.GetComponent<SpriteRenderer>().color = UpdateColor();
+    }
+
+    private Color UpdateColor()
+    {
+        Color currentColor = GetComponent<SpriteRenderer>().color;
+        foreach (Color color in colorsToBeAdded)
+        {
+            currentColor = cc.AddColor(color, currentColor);
+        }
+        return currentColor;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -42,6 +103,7 @@ public class LightSwitch : MonoBehaviour
                 parentScript.playerTouched = true;
             }
         }
+        /*
         if (collision.CompareTag("LightShades") || collision.CompareTag("LightRing"))
         {
             Color objectDefaultColor = foundObject.transform.parent.Find("LightSwitch").gameObject.GetComponent<SpriteRenderer>().color;
@@ -58,7 +120,7 @@ public class LightSwitch : MonoBehaviour
                     lightRing.GetComponent<SpriteRenderer>().color = cc.AddColor(objectDefaultColor, GetComponent<SpriteRenderer>().color);
                 }
             }
-        }
+        }*/
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -74,6 +136,7 @@ public class LightSwitch : MonoBehaviour
                 parentScript.playerTouched = false;
             }
         }
+        /*
         if (collision.CompareTag("LightShades") || collision.CompareTag("LightRing"))
         {
             Color objectDefaultColor = foundObject.transform.parent.Find("LightSwitch").gameObject.GetComponent<SpriteRenderer>().color;
@@ -90,7 +153,7 @@ public class LightSwitch : MonoBehaviour
                     lightRing.GetComponent<SpriteRenderer>().color = originalLightRingColor;
                 }
             }
-        }
+        }*/
     }
 }
 
