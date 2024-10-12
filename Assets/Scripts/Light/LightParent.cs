@@ -10,7 +10,6 @@ public class LightParent : MonoBehaviour
 
     private bool lighted = false;
     public bool playerTouched = false;
-    private bool isGrabbing = false;
     [SerializeField] private Transform grabPosition;
 
     private PlayerMovement pm;
@@ -27,35 +26,30 @@ public class LightParent : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L) && playerTouched)
+        if (playerTouched)  
         {
-            if (lighted)
+            if (Input.GetKeyDown(KeyCode.L))
             {
-                lighted = false;
-                lightShades.SetActive(false);
-                lightRing.SetActive(false);
+                lighted = !lighted;
+                lightShades.SetActive(lighted);
+                lightRing.SetActive(lighted);
             }
-            else
+
+            if (Input.GetKey(KeyCode.K) && !pm.isGrabbing)
             {
-                lighted = true;
-                lightShades.SetActive(true);
-                lightRing.SetActive(true);
+                transform.parent = grabPosition;
+                transform.position = grabPosition.position;
+                lightSwitch.GetComponent<Rigidbody2D>().isKinematic = true; // No gravity
+                pm.isGrabbing = true;
+            }
+            else if (!Input.GetKey(KeyCode.K) && pm.isGrabbing)
+            {
+                transform.parent = null;
+                transform.position = transform.position;
+                lightSwitch.GetComponent<Rigidbody2D>().isKinematic = false; // No gravity
+                pm.isGrabbing = false;
             }
         }
 
-        if (Input.GetKey(KeyCode.K) && !pm.isGrabbing && playerTouched) 
-        {
-            transform.parent = grabPosition;
-            transform.position = grabPosition.position;
-            lightSwitch.GetComponent<Rigidbody2D>().isKinematic = true; // No gravity
-            pm.isGrabbing = true; 
-        }
-        else if (!Input.GetKey(KeyCode.K) && pm.isGrabbing && playerTouched) 
-        {
-            transform.parent = null;
-            transform.position = transform.position;
-            lightSwitch.GetComponent<Rigidbody2D>().isKinematic = false; // No gravity
-            pm.isGrabbing = false; 
-        }
     }
 }
