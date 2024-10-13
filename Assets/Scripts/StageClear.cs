@@ -13,6 +13,7 @@ public class StageClear : MonoBehaviour
     {
         stageClearCanvas.SetActive(true);
         Cursor.visible = true;
+        player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
         player.canMove = false;
     }
 
@@ -21,5 +22,8 @@ public class StageClear : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        ShowStageClearUI();
+    }
 }

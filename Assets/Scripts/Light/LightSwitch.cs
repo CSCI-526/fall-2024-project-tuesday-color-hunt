@@ -41,7 +41,7 @@ public class LightSwitch : MonoBehaviour
 
     void Update()
     {
-        float ringRadius = 5.1f;
+        float ringRadius = 4.3f * 2;
         foreach (GameObject lightSwitch in lightSwitches)
         {
             Vector3 otherLightCenter = lightSwitch.transform.position;
@@ -54,8 +54,11 @@ public class LightSwitch : MonoBehaviour
                 {
                     if (!cc.CompareColors(lightSwitch.GetComponent<SpriteRenderer>().color, GetComponent<SpriteRenderer>().color))
                     {
-                        colorsToBeAdded.Add(lightSwitch.GetComponent<SpriteRenderer>().color);
-                        lightSwitchesToBeAdded.Add(lightSwitch);
+                        if (lightSwitch.transform.parent.GetComponent<LightParent>().lighted)
+                        {
+                            colorsToBeAdded.Add(lightSwitch.GetComponent<SpriteRenderer>().color);
+                            lightSwitchesToBeAdded.Add(lightSwitch);
+                        }
                     }
                 }
             }
@@ -69,7 +72,7 @@ public class LightSwitch : MonoBehaviour
             Vector3 currentLightCenter = transform.position;
             float distance = Vector3.Distance(otherLightCenter, currentLightCenter);
 
-            if (distance > ringRadius)
+            if ((distance > ringRadius) || !lightSwitch.transform.parent.GetComponent<LightParent>().lighted)
             {
                 colorsToBeAdded.Remove(lightSwitch.GetComponent<SpriteRenderer>().color);
                 lightSwitchesToBeAdded.Remove(lightSwitch);

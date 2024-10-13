@@ -8,7 +8,8 @@ using UnityEngine;
 public class LightShades : MonoBehaviour
 {
     private ColorControl cc;
-
+    private List<GameObject> objectsCollided = new List<GameObject>();
+    
     void Start()
     {
         cc = FindObjectOfType<ColorControl>();
@@ -16,35 +17,25 @@ public class LightShades : MonoBehaviour
 
     void Update()
     {
-
+        for(int i = 0; i < objectsCollided.Count; i++)
+        {
+            GameObject obj = objectsCollided[i];
+            Color objectColor = obj.GetComponent<SpriteRenderer>().color;
+            if ((obj.CompareTag("Enemy") || obj.CompareTag("Obstacle")) && cc.CompareColors(objectColor, GetComponent<SpriteRenderer>().color))
+            {
+                //objectsCollided.Remove(obj);
+                obj.SetActive(false);
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        string collidedObjectName = collision.gameObject.name;
-        GameObject foundObject = GameObject.Find(collidedObjectName);
-
-        if (foundObject != null)
-        {
-            Color objectColor = foundObject.GetComponent<SpriteRenderer>().color;
-
-            if ((collision.CompareTag("Enemy") || collision.CompareTag("Obstacle")) && cc.CompareColors(objectColor, GetComponent<SpriteRenderer>().color))
-            {
-                foundObject.SetActive(false);
-            }
-            
-        }
+        objectsCollided.Add(collision.gameObject);    
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        string collidedObjectName = collision.gameObject.name;
-        GameObject foundObject = GameObject.Find(collidedObjectName);
-
-        if (foundObject != null)
-        {
-            Color objectColor = foundObject.GetComponent<SpriteRenderer>().color;
-
-        }
+        objectsCollided.Remove(collision.gameObject);
     }
 }

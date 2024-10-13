@@ -8,7 +8,7 @@ public class LightParent : MonoBehaviour
     private GameObject lightShades;
     private GameObject lightRing;
 
-    private bool lighted = false;
+    public bool lighted = false;
     public bool playerTouched = false;
     [SerializeField] private Transform grabPosition;
 
