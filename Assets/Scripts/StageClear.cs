@@ -24,6 +24,9 @@ public class StageClear : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        ShowStageClearUI();
+        if (collision.CompareTag("Player"))
+        {
+            ShowStageClearUI();
+        }
     }
 }

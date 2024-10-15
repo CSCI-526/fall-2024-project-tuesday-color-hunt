@@ -13,6 +13,7 @@ public class TriLightParent : MonoBehaviour
     [SerializeField] private Transform grabPosition;
 
     private PlayerMovement pm;
+    private bool isGrabbing = false;
 
     void Start()
     {
@@ -35,22 +36,34 @@ public class TriLightParent : MonoBehaviour
                 triLightRing.SetActive(lighted);
             }
 
-            if (Input.GetKey(KeyCode.K) && !pm.isGrabbing)
+            if (Input.GetKeyDown(KeyCode.K))
             {
-                transform.parent = grabPosition;
-                transform.position = grabPosition.position;
-                triLightSwitch.GetComponent<Rigidbody2D>().isKinematic = true; // No gravity
-                pm.isGrabbing = true;
-            }
-            else if (!Input.GetKey(KeyCode.K) && pm.isGrabbing)
-            {
-                transform.parent = null;
-                transform.position = transform.position;
-                triLightSwitch.GetComponent<Rigidbody2D>().isKinematic = false; // No gravity
-                pm.isGrabbing = false;
+                if (isGrabbing)
+                {
+                    ReleaseObject();
+                }
+                else
+                {
+                    GrabObject();
+                }
             }
         }
+    }
 
+    private void GrabObject()
+    {
+        transform.parent = grabPosition;
+        transform.position = grabPosition.position;
+        triLightSwitch.GetComponent<Rigidbody2D>().isKinematic = true; // Disable gravity
+        pm.isGrabbing = true;
+        isGrabbing = true;
+    }
+
+    private void ReleaseObject()
+    {
+        transform.parent = null;
+        triLightSwitch.GetComponent<Rigidbody2D>().isKinematic = false; // Enable gravity
+        pm.isGrabbing = false;
+        isGrabbing = false;
     }
 }
-
