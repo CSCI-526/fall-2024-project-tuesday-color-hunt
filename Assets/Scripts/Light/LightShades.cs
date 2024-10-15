@@ -23,7 +23,6 @@ public class LightShades : MonoBehaviour
             Color objectColor = obj.GetComponent<SpriteRenderer>().color;
             if ((obj.CompareTag("Enemy") || obj.CompareTag("Obstacle")) && cc.CompareColors(objectColor, GetComponent<SpriteRenderer>().color))
             {
-                //objectsCollided.Remove(obj);
                 obj.SetActive(false);
             }
         }
