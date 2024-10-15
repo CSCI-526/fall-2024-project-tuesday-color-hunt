@@ -530,7 +530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lighted: 0
   playerTouched: 0
-  grabPosition: {fileID: 1920333262}
+  grabPosition: {fileID: 105492197}
 --- !u!1 &179676963
 GameObject:
   m_ObjectHideFlags: 0
@@ -6352,6 +6352,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1785522037}
   - component: {fileID: 1785522036}
+  - component: {fileID: 1785522039}
   - component: {fileID: 1785522035}
   - component: {fileID: 1785522038}
   m_Layer: 7
@@ -6500,6 +6501,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &1785522039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785522033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 798642d68d34d1e439d18d3b45d784df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uprightThreshold: 0.9
+  horizontalThreshold: 0.5
 --- !u!1 &1790178635
 GameObject:
   m_ObjectHideFlags: 0
