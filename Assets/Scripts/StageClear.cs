@@ -29,4 +29,9 @@ public class StageClear : MonoBehaviour
             ShowStageClearUI();
         }
     }
+
+    public void OpenScene()
+    {
+        SceneManager.LoadScene("LevelSelector");
+    }
 }
