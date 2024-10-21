@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "com.google.external-dependency-manager": "file:C:/Users/24172/Downloads/com.google.external-dependency-manager-1.2.183.tgz",
+    "com.google.firebase.app": "file:C:/Users/24172/Downloads/com.google.firebase.app-12.3.0.tgz",
+    "com.google.firebase.auth": "file:C:/Users/24172/Downloads/com.google.firebase.auth-12.3.0.tgz",
+    "com.google.firebase.database": "file:C:/Users/24172/Downloads/com.google.firebase.database-12.3.0.tgz",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.ads": "4.4.2",
@@ -49,5 +53,6 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  }
+  },
+  "scopedRegistries": []
 }

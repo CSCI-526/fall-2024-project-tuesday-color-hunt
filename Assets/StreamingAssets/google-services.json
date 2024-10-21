@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "429224922635",
+    "firebase_url": "https://project-6115520849454422510-default-rtdb.firebaseio.com",
+    "project_id": "project-6115520849454422510",
+    "storage_bucket": "project-6115520849454422510.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:429224922635:android:6ade01013aa7cd3a53810e",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.Color_Hunt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCH0c20abc6QF-kHIWiTyXq_c70qDO6Dy4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class LightParent : MonoBehaviour
@@ -11,23 +12,35 @@ public class LightParent : MonoBehaviour
     public bool lighted = false;
     public bool playerTouched = false;
     [SerializeField] private Transform grabPosition;
+    [SerializeField] private Transform initialGrabParent; // The object that might initially grab this
 
     private PlayerMovement pm;
-    private bool isGrabbing = false;
+    private bool isGrabbing;
+    private bool isGrabbedByEnemy;
 
     void Start()
     {
         LightShades = transform.Find("LightShades").gameObject;
         LightSwitch = transform.Find("LightSwitch").gameObject;
         LightRing = transform.Find("LightRing").gameObject;
-        LightShades.SetActive(false);
-        LightRing.SetActive(false);
+        if (!lighted)
+        {
+            LightShades.SetActive(false);
+            LightRing.SetActive(false);
+        }
         pm = FindObjectOfType<PlayerMovement>();
+
     }
 
     void Update()
     {
-        if (playerTouched)
+        // Check if the initialGrabParent has become inactive
+        if (initialGrabParent && initialGrabParent.gameObject.activeInHierarchy )
+        {
+            transform.position = initialGrabParent.position; 
+        }
+        
+        if (playerTouched && !isGrabbedByEnemy)
         {
             if (Input.GetKeyDown(KeyCode.L))
             {
@@ -61,9 +74,10 @@ public class LightParent : MonoBehaviour
 
     private void ReleaseObject()
     {
-        transform.parent = null;
+        transform.SetParent(null); // Detach the object from its parent without moving it
         LightSwitch.GetComponent<Rigidbody2D>().isKinematic = false; // Enable gravity
         pm.isGrabbing = false;
         isGrabbing = false;
     }
+
 }

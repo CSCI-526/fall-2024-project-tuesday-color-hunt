@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour
@@ -30,7 +31,7 @@ public class EnemyPatrol : MonoBehaviour
     void Update()
     {
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-        if (distanceToPlayer <= detectionRange)
+        if (distanceToPlayer <= detectionRange && !enemyInsideDome)
         {
             isChasingPlayer = true;
         }
@@ -38,13 +39,6 @@ public class EnemyPatrol : MonoBehaviour
         {
             isChasingPlayer = false;
         }
-
-        //bool hitLightRing = Physics2D.OverlapCircle(groundCheck.position, 0.1f, lightRingLayer);
-        //if (enemyhitLightRing)
-        //{
-          //  print("hit ring");
-           // Flip();
-      //  }
 
         if (!isChasingPlayer)
         {
@@ -114,6 +108,7 @@ public class EnemyPatrol : MonoBehaviour
             Flip();
         }
     }
+
 
     private void Flip()
     {
