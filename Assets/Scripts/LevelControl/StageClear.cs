@@ -33,6 +33,11 @@ public class StageClear : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    public void MainMenuButton()
+    {
+        SceneManager.LoadScene("LevelSelection");
+    }
+
     public void LoadNextLevelButton()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
