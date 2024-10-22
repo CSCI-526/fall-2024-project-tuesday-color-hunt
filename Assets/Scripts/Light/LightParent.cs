@@ -15,7 +15,6 @@ public class LightParent : MonoBehaviour
     [SerializeField] private Transform initialGrabParent; // The object that might initially grab this
 
     private PlayerMovement pm;
-    private bool isGrabbing;
     private bool isGrabbedByEnemy;
 
     void Start()
@@ -51,7 +50,7 @@ public class LightParent : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.K))
             {
-                if (isGrabbing)
+                if (pm.isGrabbing)
                 {
                     ReleaseObject();
                 }
@@ -69,7 +68,6 @@ public class LightParent : MonoBehaviour
         transform.position = grabPosition.position;
         LightSwitch.GetComponent<Rigidbody2D>().isKinematic = true; // Disable gravity
         pm.isGrabbing = true;
-        isGrabbing = true;
     }
 
     private void ReleaseObject()
@@ -77,7 +75,6 @@ public class LightParent : MonoBehaviour
         transform.SetParent(null); // Detach the object from its parent without moving it
         LightSwitch.GetComponent<Rigidbody2D>().isKinematic = false; // Enable gravity
         pm.isGrabbing = false;
-        isGrabbing = false;
     }
 
 }
