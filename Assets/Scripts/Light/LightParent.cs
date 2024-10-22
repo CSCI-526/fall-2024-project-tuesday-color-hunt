@@ -1,55 +1,83 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class LightParent : MonoBehaviour
 {
-    private GameObject lightSwitch;
-    private GameObject lightShades;
-    private GameObject lightRing;
+    private GameObject LightSwitch;
+    private GameObject LightShades;
+    private GameObject LightRing;
 
     public bool lighted = false;
     public bool playerTouched = false;
     [SerializeField] private Transform grabPosition;
+    [SerializeField] private Transform initialGrabParent; // The object that might initially grab this
 
     private PlayerMovement pm;
+    private bool isGrabbing;
+    private bool isGrabbedByEnemy;
 
     void Start()
     {
-        lightShades = transform.Find("LightShades").gameObject;
-        lightSwitch = transform.Find("LightSwitch").gameObject;
-        lightRing = transform.Find("LightRing").gameObject;
-        lightShades.SetActive(false);
-        lightRing.SetActive(false);
+        LightShades = transform.Find("LightShades").gameObject;
+        LightSwitch = transform.Find("LightSwitch").gameObject;
+        LightRing = transform.Find("LightRing").gameObject;
+        if (!lighted)
+        {
+            LightShades.SetActive(false);
+            LightRing.SetActive(false);
+        }
         pm = FindObjectOfType<PlayerMovement>();
+
     }
 
     void Update()
     {
-        if (playerTouched)  
+        // Check if the initialGrabParent has become inactive
+        if (initialGrabParent && initialGrabParent.gameObject.activeInHierarchy )
+        {
+            transform.position = initialGrabParent.position; 
+        }
+        
+        if (playerTouched && !isGrabbedByEnemy)
         {
             if (Input.GetKeyDown(KeyCode.L))
             {
                 lighted = !lighted;
-                lightShades.SetActive(lighted);
-                lightRing.SetActive(lighted);
+                LightShades.SetActive(lighted);
+                LightRing.SetActive(lighted);
             }
 
-            if (Input.GetKey(KeyCode.K) && !pm.isGrabbing)
+            if (Input.GetKeyDown(KeyCode.K))
             {
-                transform.parent = grabPosition;
-                transform.position = grabPosition.position;
-                lightSwitch.GetComponent<Rigidbody2D>().isKinematic = true; // No gravity
-                pm.isGrabbing = true;
-            }
-            else if (!Input.GetKey(KeyCode.K) && pm.isGrabbing)
-            {
-                transform.parent = null;
-                transform.position = transform.position;
-                lightSwitch.GetComponent<Rigidbody2D>().isKinematic = false; // No gravity
-                pm.isGrabbing = false;
+                if (isGrabbing)
+                {
+                    ReleaseObject();
+                }
+                else
+                {
+                    GrabObject();
+                }
             }
         }
-
     }
+
+    private void GrabObject()
+    {
+        transform.parent = grabPosition;
+        transform.position = grabPosition.position;
+        LightSwitch.GetComponent<Rigidbody2D>().isKinematic = true; // Disable gravity
+        pm.isGrabbing = true;
+        isGrabbing = true;
+    }
+
+    private void ReleaseObject()
+    {
+        transform.SetParent(null); // Detach the object from its parent without moving it
+        LightSwitch.GetComponent<Rigidbody2D>().isKinematic = false; // Enable gravity
+        pm.isGrabbing = false;
+        isGrabbing = false;
+    }
+
 }

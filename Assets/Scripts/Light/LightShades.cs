@@ -9,7 +9,8 @@ public class LightShades : MonoBehaviour
 {
     private ColorControl cc;
     private List<GameObject> objectsCollided = new List<GameObject>();
-    
+    private List<GameObject> objectsInDome = new List<GameObject>();
+
     void Start()
     {
         cc = FindObjectOfType<ColorControl>();
@@ -20,11 +21,23 @@ public class LightShades : MonoBehaviour
         for(int i = 0; i < objectsCollided.Count; i++)
         {
             GameObject obj = objectsCollided[i];
-            Color objectColor = obj.GetComponent<SpriteRenderer>().color;
-            if ((obj.CompareTag("Enemy") || obj.CompareTag("Obstacle")) && cc.CompareColors(objectColor, GetComponent<SpriteRenderer>().color))
+            if (obj.GetComponent<SpriteRenderer>())
             {
-                //objectsCollided.Remove(obj);
-                obj.SetActive(false);
+                Color objectColor = obj.GetComponent<SpriteRenderer>().color;
+                if ((obj.CompareTag("Enemy") || obj.CompareTag("Obstacle")) && cc.CompareColors(objectColor, GetComponent<SpriteRenderer>().color))
+                {
+                    obj.SetActive(false);
+                }
+                else if (obj.CompareTag("Enemy") && !cc.CompareColors(objectColor, GetComponent<SpriteRenderer>().color)) 
+                {
+                    if (gameObject.CompareTag("LightShades"))
+                    {
+                        obj.GetComponent<EnemyPatrol>().enemyInsideDome = true;
+                        objectsInDome.Add(obj);
+                        print("ENEMY IN DOME");
+                    }
+                }
+
             }
         }
     }
@@ -36,6 +49,13 @@ public class LightShades : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        objectsCollided.Remove(collision.gameObject);
+        for (int i = 0; i < objectsInDome.Count; i++)
+        {
+            if (objectsCollided.Contains(collision.gameObject))
+            {
+                objectsCollided.Remove(collision.gameObject);
+                print("ENEMY OUTSIDE DOME");
+            }
+        }
     }
 }
