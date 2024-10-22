@@ -58,10 +58,11 @@ public class PlayerMovement : MonoBehaviour
         if (canMove)
         {
             horizontalInput = Input.GetAxisRaw("Horizontal");
-            if (isGrounded() && (Input.GetKeyDown(KeyCode.J) || Input.GetButtonDown("Jump")))
+            /*
+            if (isGrounded() && (Input.GetKeyDown(KeyCode.J) || Input.GetButtonDown("Jump"))
             {
                 doubleJump = false;
-            }
+            }*/
 
             if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.J))
             {
@@ -113,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isGrounded()
     {
+        print("grounded");
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
     
