@@ -1,71 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Firebase;
-using Firebase.Database;
-using Firebase.Auth;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using UnityEngine.SceneManagement; // Import SceneManager for scene handling
+using UnityEngine.SceneManagement;
+using Proyecto26;
+using System.IO;
+using System;
 
 public class FirebaseManager : MonoBehaviour
 {
-    public DependencyStatus dependencyStatus;
-    public FirebaseAuth fAuth;
-    public FirebaseUser fUser;
-    public DatabaseReference dbReference;
     public bool levelCleared;
-
     private double levelStartTime;
+
+    private const string DatabaseUrl = "https://project-6115520849454422510-default-rtdb.firebaseio.com/";
+    private string authToken;
 
     private void Awake()
     {
-        // Check that all Firebase dependencies are ready
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
-        {
-            dependencyStatus = task.Result;
-            if (dependencyStatus == DependencyStatus.Available)
-            {
-                // If available, initialize Firebase
-                InitializeFirebase();
-            }
-        });
-
         levelStartTime = Time.time;
     }
 
-    private void InitializeFirebase()
-    {
-        // Set up Firebase Authentication
-        fAuth = FirebaseAuth.DefaultInstance;
-        // Set up Firebase Database
-        dbReference = FirebaseDatabase.DefaultInstance.RootReference;
-    }
 
     public void SendDataToDatabase(double time)
     {
-        // Generate userId based on current date and time
-        string userId = System.DateTime.Now.ToString("yyyyMMddHHmmss");
-
-        // Get the name of the current scene
         string currentLevel = SceneManager.GetActiveScene().name;
 
         // Create a user object with the data to send
         User user = new User(time, currentLevel);
 
-        // Save data in the database under "Players/userId"
-        string jsonData = JsonUtility.ToJson(user);
-        dbReference.Child("Players").Child(userId).SetRawJsonValueAsync(jsonData).ContinueWith(task =>
-        {
-            if (task.IsCompleted)
-            {
-                print("Data successfully sent to Firebase with userId: " + userId);
-            }
-            else
-            {
-                print("Failed to send data to Firebase: " + task.Exception);
-            }
-        });
+        // Get the current date and time and format it as a string for the user key
+        string dateTimeNow = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+
+        // Create the URL with the current date and time
+        string url = $"{DatabaseUrl}users/{dateTimeNow}.json?auth={authToken}";
+
+        RestClient.Put(url, user);
     }
 
     // Update is called once per frame
