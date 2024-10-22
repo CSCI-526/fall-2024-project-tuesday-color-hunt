@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class LightParent : MonoBehaviour
@@ -12,34 +11,23 @@ public class LightParent : MonoBehaviour
     public bool lighted = false;
     public bool playerTouched = false;
     [SerializeField] private Transform grabPosition;
-    [SerializeField] private Transform initialGrabParent; // The object that might initially grab this
 
     private PlayerMovement pm;
-    private bool isGrabbedByEnemy;
+    private bool isGrabbing = false;
 
     void Start()
     {
         LightShades = transform.Find("LightShades").gameObject;
         LightSwitch = transform.Find("LightSwitch").gameObject;
         LightRing = transform.Find("LightRing").gameObject;
-        if (!lighted)
-        {
-            LightShades.SetActive(false);
-            LightRing.SetActive(false);
-        }
+        LightShades.SetActive(false);
+        LightRing.SetActive(false);
         pm = FindObjectOfType<PlayerMovement>();
-
     }
 
     void Update()
     {
-        // Check if the initialGrabParent has become inactive
-        if (initialGrabParent && initialGrabParent.gameObject.activeInHierarchy )
-        {
-            transform.position = initialGrabParent.position; 
-        }
-        
-        if (playerTouched && !isGrabbedByEnemy)
+        if (playerTouched)
         {
             if (Input.GetKeyDown(KeyCode.L))
             {
@@ -50,7 +38,7 @@ public class LightParent : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.K))
             {
-                if (pm.isGrabbing)
+                if (isGrabbing)
                 {
                     ReleaseObject();
                 }
@@ -68,13 +56,14 @@ public class LightParent : MonoBehaviour
         transform.position = grabPosition.position;
         LightSwitch.GetComponent<Rigidbody2D>().isKinematic = true; // Disable gravity
         pm.isGrabbing = true;
+        isGrabbing = true;
     }
 
     private void ReleaseObject()
     {
-        transform.SetParent(null); // Detach the object from its parent without moving it
+        transform.parent = null;
         LightSwitch.GetComponent<Rigidbody2D>().isKinematic = false; // Enable gravity
         pm.isGrabbing = false;
+        isGrabbing = false;
     }
-
 }
