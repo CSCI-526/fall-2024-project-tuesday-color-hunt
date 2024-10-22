@@ -21,7 +21,6 @@ public class Bud : MonoBehaviour
             if (cc.CompareColors(objectColor, GetComponent<SpriteRenderer>().color))
             {
                 parentScript.isBlossom = true;
-                print("changed!");
             }
         }
     }
