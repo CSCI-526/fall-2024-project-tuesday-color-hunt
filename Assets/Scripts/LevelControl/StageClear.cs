@@ -8,9 +8,17 @@ public class StageClear : MonoBehaviour
 {
     public GameObject stageClearCanvas;
     public PlayerMovement player;
+    FirebaseManager fm;
+
+    void Start()
+    {
+        fm = FindObjectOfType<FirebaseManager>();
+    }
 
     public void ShowStageClearUI()
     {
+        fm.levelCleared = true;
+
         stageClearCanvas.SetActive(true);
         Cursor.visible = true;
         player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
@@ -20,6 +28,17 @@ public class StageClear : MonoBehaviour
     public void RestartButton()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void MainMenuButton()
+    {
+        SceneManager.LoadScene("LevelSelection");
+    }
+
+    public void LoadNextLevelButton()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex + 1);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
