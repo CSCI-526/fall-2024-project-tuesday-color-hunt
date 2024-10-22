@@ -678,7 +678,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5348319810516665676, guid: 9730ec70886ff7c40a953f58d38d0fb9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1
+      value: -1.41
       objectReference: {fileID: 0}
     - target: {fileID: 5348319810516665676, guid: 9730ec70886ff7c40a953f58d38d0fb9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1581,6 +1581,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1623410668 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8731196940987760734, guid: 9730ec70886ff7c40a953f58d38d0fb9, type: 3}
+  m_PrefabInstance: {fileID: 1049937855}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1750080620
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1821,7 +1826,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6909591807016389713, guid: 9730ec70886ff7c40a953f58d38d0fb9, type: 3}
   m_PrefabInstance: {fileID: 1049937855}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1623410668}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6282dd6463ecb4d2a9b950dba94037a0, type: 3}
@@ -2318,11 +2323,11 @@ PrefabInstance:
     - target: {fileID: 8902053405942981675, guid: a95794d3a89dfbd4798a6399c7278d6a, type: 3}
       propertyPath: Player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1623410668}
     - target: {fileID: 8902053405942981675, guid: a95794d3a89dfbd4798a6399c7278d6a, type: 3}
       propertyPath: startPoint
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1623410668}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
