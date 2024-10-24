@@ -2796,7 +2796,11 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
+<<<<<<< Updated upstream:Assets/Scenes/Level4.unity
   m_margin: {x: -3.5580902, y: 3.941805, z: 176.78882, w: 43.458878}
+=======
+  m_margin: {x: -10.219803, y: 12.041659, z: 190.0485, w: 31.01453}
+>>>>>>> Stashed changes:Assets/Scenes/Tutorial-2.unity
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2953,6 +2957,7 @@ SceneRoots:
   - {fileID: 290244411}
   - {fileID: 1821478781}
   - {fileID: 1038367942}
+<<<<<<< Updated upstream:Assets/Scenes/Level4.unity
   - {fileID: 129732874}
   - {fileID: 1015105082}
   - {fileID: 691313819}
@@ -2961,3 +2966,15 @@ SceneRoots:
   - {fileID: 889393290}
   - {fileID: 666582609}
   - {fileID: 1972297946}
+=======
+  - {fileID: 791152401}
+  - {fileID: 1348508072}
+  - {fileID: 889393290}
+  - {fileID: 666582609}
+  - {fileID: 1972297946}
+  - {fileID: 630674534}
+  - {fileID: 1318017831}
+  - {fileID: 2049685963}
+  - {fileID: 1796871663}
+  - {fileID: 691313819}
+>>>>>>> Stashed changes:Assets/Scenes/Tutorial-2.unity
