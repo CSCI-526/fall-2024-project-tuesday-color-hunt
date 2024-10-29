@@ -13,8 +13,9 @@ public class PlayerMovement : MonoBehaviour
     private float speed = 8f;
     private float jumpingPower = 16f;
     public bool isFacingRight = true;
+    
     public bool canMove;
-
+    public bool canJump;
     private bool doubleJump;
 
     private bool isWallSliding;
@@ -46,7 +47,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
-        canMove = true;
         Cursor.visible = false;
     }
 
@@ -64,10 +64,10 @@ public class PlayerMovement : MonoBehaviour
                 doubleJump = false;
             }*/
 
-            if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.J))
+            if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.J)) && canJump)
             {
                 //(doubleJump && finishline.canDoubleJump)
-                if (isGrounded() || doubleJump)
+                if ((isGrounded() || doubleJump))
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
                     doubleJump = !doubleJump;
@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
             }
 
-            if ((Input.GetButtonUp("Jump") || Input.GetKeyUp(KeyCode.J)) && rb.velocity.y > 0f)
+            if ((Input.GetButtonUp("Jump") || Input.GetKeyUp(KeyCode.J)) && rb.velocity.y > 0f && canJump)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             }
@@ -114,7 +114,6 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isGrounded()
     {
-        print("grounded");
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
     
