@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     private PlayerMovement pm;
     private FirebaseManager fm;
     public bool isPaused;
+    public bool isCleared;
     private int pageNum;
 
     void Start()
@@ -26,61 +27,66 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (!isCleared)
         {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                if (isPaused)
+                {
+                    ResumeGame();
+                }
+                else
+                {
+                    PauseGame();
+                }
+            }
+
             if (isPaused)
             {
-                ResumeGame();
-            }
-            else
-            {
-                PauseGame();
-            }
-        }
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    pageNum--;
+                }
+                if (Input.GetKeyDown(KeyCode.D))
+                {
+                    pageNum++;
+                }
 
-        if (isPaused)
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                pageNum--;
-            }
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                pageNum++;
+                if (pageNum == 0)
+                {
+                    pauseMenu.transform.Find("LightTips").gameObject.SetActive(false);
+                    pauseMenu.transform.Find("KeybindTips").gameObject.SetActive(true);
+                    pauseMenu.transform.Find("SelectionMenu").gameObject.SetActive(false);
+                }
+                else if (pageNum == 1)
+                {
+                    pauseMenu.transform.Find("LightTips").gameObject.SetActive(true);
+                    pauseMenu.transform.Find("KeybindTips").gameObject.SetActive(false);
+                    pauseMenu.transform.Find("SelectionMenu").gameObject.SetActive(false);
+                }
+                else if (pageNum == 2)
+                {
+                    pauseMenu.transform.Find("LightTips").gameObject.SetActive(false);
+                    pauseMenu.transform.Find("KeybindTips").gameObject.SetActive(false);
+                    pauseMenu.transform.Find("SelectionMenu").gameObject.SetActive(true);
+                }
             }
 
-            if (pageNum == 0)
+            if (pageNum > 1)
             {
-                pauseMenu.transform.Find("LightTips").gameObject.SetActive(true);
-                pauseMenu.transform.Find("KeybindTips").gameObject.SetActive(false);
-                pauseMenu.transform.Find("SelectionMenu").gameObject.SetActive(false);
+                pageNum = 2;
             }
-            else if (pageNum == 1)
+            else if (pageNum < 1)
             {
-                pauseMenu.transform.Find("LightTips").gameObject.SetActive(false);
-                pauseMenu.transform.Find("KeybindTips").gameObject.SetActive(true);
-                pauseMenu.transform.Find("SelectionMenu").gameObject.SetActive(false);
-            }
-            else if (pageNum == 2)
-            {
-                pauseMenu.transform.Find("LightTips").gameObject.SetActive(false);
-                pauseMenu.transform.Find("KeybindTips").gameObject.SetActive(false);
-                pauseMenu.transform.Find("SelectionMenu").gameObject.SetActive(true);
+                pageNum = 0;
             }
         }
-
-        if (pageNum > 1)
-        {
-            pageNum = 2;
-        }
-        else if (pageNum < 1)
-        {
-            pageNum = 0;
-        }
+        
     }
 
     public void ShowStageClearUI()
     {
+        isCleared = true;
         fm.levelCleared = true;
         stageClearMenu.SetActive(true);
         helpText.SetActive(false);
