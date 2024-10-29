@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     private PlayerMovement pm;
     private FirebaseManager fm;
-    private bool isPaused;
+    public bool isPaused;
     private int pageNum;
 
     void Start()
@@ -20,9 +20,8 @@ public class GameManager : MonoBehaviour
         fm = FindObjectOfType<FirebaseManager>();
         pm = FindObjectOfType<PlayerMovement>();
         Time.timeScale = 1f;
-        pm.enabled = true;
+        //pm.enabled = false;
         helpText.SetActive(true);
-
     }
 
     void Update()
