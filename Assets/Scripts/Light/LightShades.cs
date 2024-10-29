@@ -24,9 +24,14 @@ public class LightShades : MonoBehaviour
             if (obj.GetComponent<SpriteRenderer>())
             {
                 Color objectColor = obj.GetComponent<SpriteRenderer>().color;
-                if ((obj.CompareTag("Enemy") || obj.CompareTag("Obstacle")) && cc.CompareColors(objectColor, GetComponent<SpriteRenderer>().color))
+                if (obj.CompareTag("Enemy") || obj.CompareTag("Obstacle"))
                 {
-                    obj.SetActive(false);
+                    print("touched Enemy or obstacle");
+                    if (cc.CompareColors(objectColor, GetComponent<SpriteRenderer>().color))
+                    {
+                        print("color the same");
+                        obj.SetActive(false);
+                    }
                 }
                 else if (obj.CompareTag("Enemy") && !cc.CompareColors(objectColor, GetComponent<SpriteRenderer>().color)) 
                 {
@@ -34,7 +39,6 @@ public class LightShades : MonoBehaviour
                     {
                         obj.GetComponent<EnemyPatrol>().enemyInsideDome = true;
                         objectsInDome.Add(obj);
-                        print("ENEMY IN DOME");
                     }
                 }
 

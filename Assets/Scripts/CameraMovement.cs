@@ -12,7 +12,6 @@ public class CameraMovement : MonoBehaviour
 
     [SerializeField] private Transform target;
     private Camera mainCamera;
-    [SerializeField] public StageClear sc;
 
     void Start()
     {
