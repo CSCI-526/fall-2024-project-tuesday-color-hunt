@@ -19,7 +19,7 @@ public class EnemyPatrol : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    private bool isChasingPlayer = false;
+    //private bool isChasingPlayer = false;
     public bool enemyInsideDome = false;
     //public bool enemyhitLightRing = false;
 
@@ -30,6 +30,9 @@ public class EnemyPatrol : MonoBehaviour
 
     void Update()
     {
+        Patrol();
+
+        /*
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
         if (distanceToPlayer <= detectionRange && !enemyInsideDome)
         {
@@ -47,7 +50,7 @@ public class EnemyPatrol : MonoBehaviour
         else
         {
             ChasePlayer();
-        }
+        }*/
     }
 
     private void Patrol()
@@ -60,6 +63,7 @@ public class EnemyPatrol : MonoBehaviour
         }
     }
 
+    /*
     private void ChasePlayer()
     {
         Vector2 direction = (player.position - transform.position).normalized;
@@ -78,9 +82,9 @@ public class EnemyPatrol : MonoBehaviour
         {
             Flip();
         }
-    }
+    }*/
 
-    private bool atEdge()
+        private bool atEdge()
     {
         return !Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
     }
