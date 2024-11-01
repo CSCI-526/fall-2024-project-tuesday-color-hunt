@@ -16,6 +16,7 @@ public class LightParent : MonoBehaviour
 
     private PlayerMovement pm;
     private bool isGrabbedByEnemy;
+    private int lightToggleCount;
 
     void Start()
     {
@@ -28,7 +29,7 @@ public class LightParent : MonoBehaviour
             LightRing.SetActive(false);
         }
         pm = FindObjectOfType<PlayerMovement>();
-
+        lightToggleCount = PlayerPrefs.GetInt("lightToggleCount", 0);
     }
 
     void Update()
@@ -43,6 +44,10 @@ public class LightParent : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.L))
             {
+                lightToggleCount++;
+                PlayerPrefs.SetInt("lightToggleCount", lightToggleCount);
+                PlayerPrefs.Save();
+
                 lighted = !lighted;
                 LightShades.SetActive(lighted);
                 LightRing.SetActive(lighted);

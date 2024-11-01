@@ -1437,7 +1437,7 @@ GameObject:
   - component: {fileID: 1980549129}
   m_Layer: 0
   m_Name: Goal
-  m_TagString: Untagged
+  m_TagString: Goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1630,6 +1630,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Death
       objectReference: {fileID: 0}
+    - target: {fileID: 4081836881470315328, guid: a95794d3a89dfbd4798a6399c7278d6a, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 5806615170969667250, guid: a95794d3a89dfbd4798a6399c7278d6a, type: 3}
       propertyPath: m_Color.b
       value: 0
@@ -1650,7 +1654,8 @@ PrefabInstance:
       propertyPath: startPoint
       value: 
       objectReference: {fileID: 1623410668}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8902053405942981675, guid: a95794d3a89dfbd4798a6399c7278d6a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1883,7 +1888,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1861965957393866294, guid: a3fccd5af512da24180be50881457878, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.48
+      value: 9.91
       objectReference: {fileID: 0}
     - target: {fileID: 1861965957393866294, guid: a3fccd5af512da24180be50881457878, type: 3}
       propertyPath: m_LocalPosition.y

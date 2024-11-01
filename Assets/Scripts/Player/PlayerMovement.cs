@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private float speed = 8f;
     private float jumpingPower = 16f;
     public bool isFacingRight = true;
-    
+
     public bool canMove;
     public bool canJump;
     private bool doubleJump;
@@ -40,7 +37,9 @@ public class PlayerMovement : MonoBehaviour
     private Camera mainCamera;
 
     public bool isGrabbing = false;
-
+    // For FirebaseManager
+    private FirebaseManager fm;
+    private int deathCount;
 
     // Start is called before the first frame update
     private void Awake()
@@ -48,31 +47,26 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         Cursor.visible = false;
+        //fm = FindObjectOfType<FirebaseManager>();
+
+        // Load deathCount from PlayerPrefs
+        deathCount = PlayerPrefs.GetInt("DeathCount", 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
         if (canMove)
         {
             horizontalInput = Input.GetAxisRaw("Horizontal");
-            /*
-            if (isGrounded() && (Input.GetKeyDown(KeyCode.J) || Input.GetButtonDown("Jump"))
-            {
-                doubleJump = false;
-            }*/
 
             if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.J)) && canJump)
             {
-                //(doubleJump && finishline.canDoubleJump)
                 if ((isGrounded() || doubleJump))
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
                     doubleJump = !doubleJump;
                 }
-
             }
 
             if ((Input.GetButtonUp("Jump") || Input.GetKeyUp(KeyCode.J)) && rb.velocity.y > 0f && canJump)
@@ -88,8 +82,6 @@ public class PlayerMovement : MonoBehaviour
                 Flip();
             }
         }
-
-
     }
 
     private void FixedUpdate()
@@ -99,7 +91,6 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(horizontalInput * speed, rb.velocity.y);
         }
     }
-
 
     private void Flip()
     {
@@ -116,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
-    
+
     private void WallSlide()
     {
         if (isWalled() && !isGrounded() && horizontalInput != 0f)
@@ -173,16 +164,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy")) // Including death
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            //transform.position = startPosition.position; // Move player back to start position
+            // Increase death count and save it to PlayerPrefs
+            deathCount++;
+            PlayerPrefs.SetInt("DeathCount", deathCount);
+            PlayerPrefs.Save();
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the scene
         }
-    }
-
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        
     }
 }

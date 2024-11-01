@@ -26,10 +26,8 @@ public class LightShades : MonoBehaviour
                 Color objectColor = obj.GetComponent<SpriteRenderer>().color;
                 if (obj.CompareTag("Enemy") || obj.CompareTag("Obstacle"))
                 {
-                    print("touched Enemy or obstacle");
                     if (cc.CompareColors(objectColor, GetComponent<SpriteRenderer>().color))
                     {
-                        print("color the same");
                         obj.SetActive(false);
                     }
                 }
@@ -58,7 +56,6 @@ public class LightShades : MonoBehaviour
             if (objectsCollided.Contains(collision.gameObject))
             {
                 objectsCollided.Remove(collision.gameObject);
-                print("ENEMY OUTSIDE DOME");
             }
         }
     }
