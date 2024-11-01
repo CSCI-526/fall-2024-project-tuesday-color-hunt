@@ -43,11 +43,11 @@ public class GameManager : MonoBehaviour
 
             if (isPaused)
             {
-                if (Input.GetKeyDown(KeyCode.A))
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
                     pageNum--;
                 }
-                if (Input.GetKeyDown(KeyCode.D))
+                if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
                     pageNum++;
                 }

@@ -59,9 +59,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45770017f6489284286d483e93b98432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageClearMenu: {fileID: 0}
-  pauseMenu: {fileID: 0}
-  helpText: {fileID: 0}
+  stageClearMenu: {fileID: 5060541837772523, guid: 4ed768a362caf5c489fa76acd984abca, type: 3}
+  pauseMenu: {fileID: 6440981764407809879, guid: 85eccd2377ac1e742972500fb0a77a2a, type: 3}
+  helpText: {fileID: 7492873728454487122, guid: bbb177013a743e34e8cd825fe8a27be5, type: 3}
   isPaused: 0
   isCleared: 0
 --- !u!114 &3746508029769835965
