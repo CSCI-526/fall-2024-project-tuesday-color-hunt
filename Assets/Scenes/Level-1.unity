@@ -1886,6 +1886,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 5822847787630877940, guid: 6797eee149512824d80b08936c81f73b, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 6668424938721780306, guid: a1c9afea37009b04c936b5d3b4f2f135, type: 3}
       propertyPath: m_Color.b
       value: 0.5882353
@@ -2859,6 +2863,10 @@ PrefabInstance:
     - target: {fileID: 5822847787630877940, guid: 6797eee149512824d80b08936c81f73b, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822847787630877940, guid: 6797eee149512824d80b08936c81f73b, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 6668424938721780306, guid: a1c9afea37009b04c936b5d3b4f2f135, type: 3}
       propertyPath: m_Color.b
@@ -5373,6 +5381,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 5822847787630877940, guid: 6797eee149512824d80b08936c81f73b, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 6668424938721780306, guid: a1c9afea37009b04c936b5d3b4f2f135, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -6748,6 +6760,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1232458388}
   - component: {fileID: 1232458389}
+  - component: {fileID: 1232458390}
   m_Layer: 0
   m_Name: MovingWithEnemy
   m_TagString: Untagged
@@ -6788,6 +6801,33 @@ MonoBehaviour:
   initialGrabParent: {fileID: 1746363540}
   x_pos: 2
   y_pos: 5.3
+--- !u!50 &1232458390
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232458387}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1255900437
 GameObject:
   m_ObjectHideFlags: 0
@@ -9969,6 +10009,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5822847787630877940, guid: 6797eee149512824d80b08936c81f73b, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 6668424938721780306, guid: a1c9afea37009b04c936b5d3b4f2f135, type: 3}
       propertyPath: m_Color.b
       value: 0
@@ -11354,6 +11398,10 @@ PrefabInstance:
     - target: {fileID: 5822847787630877940, guid: 6797eee149512824d80b08936c81f73b, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822847787630877940, guid: 6797eee149512824d80b08936c81f73b, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 6668424938721780306, guid: a1c9afea37009b04c936b5d3b4f2f135, type: 3}
       propertyPath: m_Color.b
@@ -14431,6 +14479,10 @@ PrefabInstance:
     - target: {fileID: 5822847787630877940, guid: 6797eee149512824d80b08936c81f73b, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5822847787630877940, guid: 6797eee149512824d80b08936c81f73b, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 6668424938721780306, guid: a1c9afea37009b04c936b5d3b4f2f135, type: 3}
       propertyPath: m_Color.r
