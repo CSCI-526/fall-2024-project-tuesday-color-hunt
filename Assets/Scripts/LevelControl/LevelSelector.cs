@@ -39,7 +39,10 @@ public class LevelSelector : MonoBehaviour
     {
         SceneManager.LoadScene("Medium-1");
     }
-
+    public void SelectMedium_2()
+    {
+        SceneManager.LoadScene("Medium-2");
+    }
 
     public void SelectAbandonedLevel_1()
     {
