@@ -51,12 +51,10 @@ public class LightShades : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        for (int i = 0; i < objectsInDome.Count; i++)
+        if (objectsCollided.Contains(collision.gameObject))
         {
-            if (objectsCollided.Contains(collision.gameObject))
-            {
-                objectsCollided.Remove(collision.gameObject);
-            }
+            objectsCollided.Remove(collision.gameObject);
         }
+        
     }
 }

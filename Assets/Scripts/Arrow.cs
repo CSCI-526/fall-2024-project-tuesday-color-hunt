@@ -35,23 +35,24 @@ public class Arrow : MonoBehaviour
         Vector3 screenPoint = mainCamera.WorldToViewportPoint(target.position);
         bool isTargetInside = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
 
+        Vector3 direction = target.position - mainCamera.transform.position;
+        direction.z = 0;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+        arrowRectTransform.rotation = Quaternion.Euler(0, 0, angle);
+
         if (isTargetInside)
         {
-            gameObject.SetActive(false); // Hide arrow if the target is within camera view
+            arrowImage.SetActive(false); // Hide the arrow if the target is within the camera view
         }
         else
         {
-            gameObject.SetActive(true);
-
-            Vector3 direction = target.position - mainCamera.transform.position;
-            direction.z = 0;
-
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-            arrowRectTransform.rotation = Quaternion.Euler(0, 0, angle);
+            arrowImage.SetActive(true);
 
             screenPoint = mainCamera.WorldToScreenPoint(target.position);
             screenPoint.z = 0;
 
+            // Clamp the arrow's position to keep it on the edge of the screen
             float clampedX = Mathf.Clamp(screenPoint.x, 50, Screen.width - 50);
             float clampedY = Mathf.Clamp(screenPoint.y, 50, Screen.height - 50);
 

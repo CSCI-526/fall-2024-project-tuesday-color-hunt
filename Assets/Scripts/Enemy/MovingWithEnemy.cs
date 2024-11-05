@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class MovingWithEnemy : MonoBehaviour
@@ -45,6 +46,7 @@ public class MovingWithEnemy : MonoBehaviour
         {
             if (otherRb != null)
             {
+                print("ok");
                 otherRb.velocity += rb.velocity;
             }
         }
