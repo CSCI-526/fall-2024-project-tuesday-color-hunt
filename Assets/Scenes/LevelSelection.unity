@@ -675,7 +675,7 @@ PrefabInstance:
       objectReference: {fileID: 1857370760}
     - target: {fileID: 4072183608445651579, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SelectLevel_1
+      value: SelectAbandonedLevel_1
       objectReference: {fileID: 0}
     - target: {fileID: 4072183608445651579, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -930,18 +930,26 @@ PrefabInstance:
     - target: {fileID: 4072183608445651579, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 1857370760}
+    - target: {fileID: 4072183608445651579, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelectMedium_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072183608445651579, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LevelSelector, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4412713019778312317, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_Color.b
-      value: 0.3301887
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4412713019778312317, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_Color.g
-      value: 0.3301887
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4412713019778312317, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_Color.r
-      value: 0.3301887
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4470042412545142875, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_text
@@ -2396,7 +2404,7 @@ PrefabInstance:
       objectReference: {fileID: 1857370760}
     - target: {fileID: 4072183608445651579, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: SelectTutorial_5
       objectReference: {fileID: 0}
     - target: {fileID: 4072183608445651579, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -2404,15 +2412,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4412713019778312317, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_Color.b
-      value: 0.33333334
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4412713019778312317, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_Color.g
-      value: 0.33333334
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4412713019778312317, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_Color.r
-      value: 0.33333334
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4470042412545142875, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_text
@@ -2531,7 +2539,7 @@ PrefabInstance:
       objectReference: {fileID: 1857370760}
     - target: {fileID: 4072183608445651579, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: SelectMedium_1
       objectReference: {fileID: 0}
     - target: {fileID: 4072183608445651579, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -2539,15 +2547,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4412713019778312317, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_Color.b
-      value: 0.33333334
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4412713019778312317, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_Color.g
-      value: 0.33333334
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4412713019778312317, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_Color.r
-      value: 0.33333334
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8116480798534531878, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_Name
@@ -2681,12 +2689,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -2916,7 +2924,7 @@ PrefabInstance:
       objectReference: {fileID: 1857370760}
     - target: {fileID: 4072183608445651579, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
+      value: SelectTutorial_6
       objectReference: {fileID: 0}
     - target: {fileID: 4072183608445651579, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -2924,15 +2932,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4412713019778312317, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_Color.b
-      value: 0.33333334
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4412713019778312317, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_Color.g
-      value: 0.33333334
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4412713019778312317, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_Color.r
-      value: 0.33333334
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4470042412545142875, guid: b0abf224700f84de79a18f8bbee634be, type: 3}
       propertyPath: m_text

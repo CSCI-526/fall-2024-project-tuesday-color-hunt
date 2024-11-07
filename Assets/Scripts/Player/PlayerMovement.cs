@@ -69,10 +69,11 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
+            /*
             if ((Input.GetButtonUp("Jump") || Input.GetKeyUp(KeyCode.J)) && rb.velocity.y > 0f && canJump)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-            }
+            }*/
 
             WallSlide();
             WallJump();
@@ -81,6 +82,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 Flip();
             }
+
         }
     }
 

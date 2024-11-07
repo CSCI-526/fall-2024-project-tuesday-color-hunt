@@ -26,21 +26,29 @@ public class LevelSelector : MonoBehaviour
     {
         SceneManager.LoadScene("Tutorial-4");
     }
+    public void SelectTutorial_5()
+    {
+        SceneManager.LoadScene("Tutorial-5");
+    }
+    public void SelectTutorial_6()
+    {
+        SceneManager.LoadScene("Tutorial-6");
+    }
 
-    public void SelectLevel_1()
+    public void SelectMedium_1()
     {
-        SceneManager.LoadScene("Level-1");
+        SceneManager.LoadScene("Medium-1");
     }
-    public void SelectLevel_2()
+    public void SelectMedium_2()
     {
-        SceneManager.LoadScene("Level-2");
+        SceneManager.LoadScene("Medium-2");
     }
-    public void SelectLevel_3()
+
+    public void SelectAbandonedLevel_1()
     {
-        SceneManager.LoadScene("Level-3");
+        SceneManager.LoadScene("Abandoned-1");
     }
-    public void SelectLevel_4()
-    {
-        SceneManager.LoadScene("Level-4");
-    }
+    
+
+    
 }
