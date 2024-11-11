@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject stageClearMenu;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject helpText;
+    [SerializeField] private GameObject videoPlayer;
 
     private PlayerMovement pm;
     private FirebaseManager fm;
@@ -20,67 +23,65 @@ public class GameManager : MonoBehaviour
     {
         fm = FindObjectOfType<FirebaseManager>();
         pm = FindObjectOfType<PlayerMovement>();
-        Time.timeScale = 1f;
+        if (videoPlayer)
+        {
+            Time.timeScale = 0f;
+            helpText.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            helpText.SetActive(true);
+        }
         //pm.enabled = false;
-        helpText.SetActive(true);
+        pageNum = 0;
     }
 
     void Update()
     {
         if (!isCleared)
         {
-            if (Input.GetKeyDown(KeyCode.Tab))
+            if ((videoPlayer && !videoPlayer.activeInHierarchy) || !videoPlayer)
             {
-                if (isPaused)
+                if (Input.GetKeyDown(KeyCode.Tab))
                 {
-                    ResumeGame();
-                }
-                else
-                {
-                    PauseGame();
+                    if (isPaused)
+                    {
+                        ResumeGame();
+                    }
+                    else
+                    {
+                        PauseGame();
+                    }
                 }
             }
-
             if (isPaused)
             {
-                if (Input.GetKeyDown(KeyCode.LeftArrow))
-                {
-                    pageNum--;
-                }
-                if (Input.GetKeyDown(KeyCode.RightArrow))
-                {
-                    pageNum++;
-                }
-
                 if (pageNum == 0)
                 {
                     pauseMenu.transform.Find("LightTips").gameObject.SetActive(false);
-                    pauseMenu.transform.Find("KeybindTips").gameObject.SetActive(true);
-                    pauseMenu.transform.Find("SelectionMenu").gameObject.SetActive(false);
+                    pauseMenu.transform.Find("KeybindTips").gameObject.SetActive(false);
+                    pauseMenu.transform.Find("SelectionMenu").gameObject.SetActive(true);
+
                 }
                 else if (pageNum == 1)
                 {
                     pauseMenu.transform.Find("LightTips").gameObject.SetActive(true);
                     pauseMenu.transform.Find("KeybindTips").gameObject.SetActive(false);
                     pauseMenu.transform.Find("SelectionMenu").gameObject.SetActive(false);
+                    
                 }
                 else if (pageNum == 2)
                 {
                     pauseMenu.transform.Find("LightTips").gameObject.SetActive(false);
-                    pauseMenu.transform.Find("KeybindTips").gameObject.SetActive(false);
-                    pauseMenu.transform.Find("SelectionMenu").gameObject.SetActive(true);
+                    pauseMenu.transform.Find("KeybindTips").gameObject.SetActive(true);
+                    pauseMenu.transform.Find("SelectionMenu").gameObject.SetActive(false);
+                    
                 }
             }
-
-            if (pageNum > 1)
-            {
-                pageNum = 2;
-            }
-            else if (pageNum < 1)
-            {
-                pageNum = 0;
-            }
         }
+
+        
         
     }
 
@@ -118,11 +119,51 @@ public class GameManager : MonoBehaviour
 
     public void RestartButton()
     {
+        string savedString = PlayerPrefs.GetString("TimeSpent", "0");
+        double savedTimeSpent = double.Parse(savedString);
+
+        double currentTimeSpent = Time.time - fm.levelStartTime + savedTimeSpent;
+        PlayerPrefs.SetString("TimeSpent", currentTimeSpent.ToString());
+        PlayerPrefs.Save();
+
+        int restartCount = PlayerPrefs.GetInt("RestartCount", 0);
+        restartCount++;
+        PlayerPrefs.SetInt("RestartCount", restartCount);
+        PlayerPrefs.Save();
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ColorSchemeButton()
+    {
+        pageNum = 1;
+    }
+
+    public void KeybindsButton()
+    {
+        pageNum = 2;
+    }
+
+    public void BackToSelectionButton()
+    {
+        pageNum = 0;
     }
 
     public void MainMenuButton()
     {
+        PlayerPrefs.SetInt("DeathCount", 0);
+        PlayerPrefs.Save();
+
+        PlayerPrefs.SetInt("lightToggleCount", 0);
+        PlayerPrefs.Save();
+
+        PlayerPrefs.SetInt("lightMixedCount", 0);
+        PlayerPrefs.Save();
+
+        double zeroTime = 0.0;
+        PlayerPrefs.SetString("TimeSpent", zeroTime.ToString());
+        PlayerPrefs.Save();
+
         SceneManager.LoadScene("LevelSelection");
     }
 

@@ -10,10 +10,7 @@ using System;
 public class FirebaseManager : MonoBehaviour
 {
     public bool levelCleared;
-    private double levelStartTime;
-    private int deathCount;
-    private int lightToggleCount;
-    private int lightMixedCount;
+    public double levelStartTime;
 
     private const string DatabaseUrl = "https://project-6115520849454422510-default-rtdb.firebaseio.com/";
     private string authToken;
@@ -21,23 +18,20 @@ public class FirebaseManager : MonoBehaviour
     private void Awake()
     {
         levelStartTime = Time.time;
-
-       // deathCount = PlayerPrefs.GetInt("DeathCount", 0);
-       // lightToggleCount = PlayerPrefs.GetInt("lightToggleCount", 0);
     }
 
-    public void SendDataToDatabase(double time)
+    public void SendDataToDatabase(int restart, double time, int deathCount, int lightToggleCount, int lightMixedCount)
     {
         string currentLevel = SceneManager.GetActiveScene().name;
 
         // Create a user object with the data to send
-        User user = new User(currentLevel, time, deathCount, lightToggleCount, lightMixedCount);
+        User user = new User(currentLevel, restart, time, deathCount, lightToggleCount, lightMixedCount);
 
         // Get the current date and time and format it as a string for the user key
         string dateTimeNow = DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
         // Create the URL with the current date and time
-        string url = $"{DatabaseUrl}users/{dateTimeNow}.json?auth={authToken}";
+        string url = $"{DatabaseUrl}ForBetaTesting/{dateTimeNow}.json?auth={authToken}";
 
         RestClient.Put(url, user);
     }
@@ -47,26 +41,32 @@ public class FirebaseManager : MonoBehaviour
     {
         if (levelCleared)
         {
-            deathCount = PlayerPrefs.GetInt("DeathCount", 0);
-            lightToggleCount = PlayerPrefs.GetInt("lightToggleCount", 0);
-            lightMixedCount = PlayerPrefs.GetInt("lightMixedCount", 0);
-
+            int restartCount = PlayerPrefs.GetInt("RestartCount", 0);
+            int deathCount = PlayerPrefs.GetInt("DeathCount", 0);
+            int lightToggleCount = PlayerPrefs.GetInt("lightToggleCount", 0);
+            int lightMixedCount = PlayerPrefs.GetInt("lightMixedCount", 0);
+            
             levelCleared = !levelCleared;
             double timeSpentOnLevel = Time.time - levelStartTime;
-            SendDataToDatabase(timeSpentOnLevel);
-            levelStartTime = Time.time;
+            string savedString = PlayerPrefs.GetString("TimeSpent", "0");
+            double savedTimeSpent = double.Parse(savedString);
+            SendDataToDatabase(restartCount, timeSpentOnLevel + savedTimeSpent, deathCount, lightToggleCount, lightMixedCount);
 
-            // Reset deathCount after data is sent
-            deathCount = 0;
-            PlayerPrefs.SetInt("DeathCount", deathCount);
+            // Reset after data is sent
+            PlayerPrefs.SetInt("DeathCount", 0);
             PlayerPrefs.Save();
 
-            lightToggleCount = 0;
-            PlayerPrefs.SetInt("lightToggleCount", lightToggleCount);
+            PlayerPrefs.SetInt("lightToggleCount", 0);
             PlayerPrefs.Save();
 
-            lightMixedCount = 0;
-            PlayerPrefs.SetInt("lightMixedCount", lightMixedCount);
+            PlayerPrefs.SetInt("lightMixedCount", 0);
+            PlayerPrefs.Save();
+
+            double zeroTime = 0.0;
+            PlayerPrefs.SetString("TimeSpent", zeroTime.ToString());
+            PlayerPrefs.Save();
+
+            PlayerPrefs.SetInt("RestartCount", 0);
             PlayerPrefs.Save();
         }
     }
@@ -75,18 +75,21 @@ public class FirebaseManager : MonoBehaviour
     public class User
     {
         public string the_level_is;
-        public double time_spent_to_clear_the_level_is;
+        public double time_spent;
         public int times_of_death;
         public int times_of_light_toggled;
         public int times_of_light_mixed;
+        public int times_of_restart;
 
-        public User(string currentLevel, double time, int death, int light, int lightMixed)
+        public User(string currentLevel, int restart, double time, int death, int light, int lightMixed)
         {
             this.the_level_is = currentLevel;
-            this.time_spent_to_clear_the_level_is = time;
+            this.times_of_restart = restart;
+            this.time_spent = time;
             this.times_of_death = death;
             this.times_of_light_toggled = light;
             this.times_of_light_mixed = lightMixed;
+
         }
     }
 }

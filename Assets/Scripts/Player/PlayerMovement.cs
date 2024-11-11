@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -41,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     private FirebaseManager fm;
     private int deathCount;
 
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -58,14 +60,28 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canMove)
         {
+            if (isGrounded())
+            {
+                doubleJump = true;
+            }
+
+            
             horizontalInput = Input.GetAxisRaw("Horizontal");
+            
 
             if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.J)) && canJump)
             {
-                if ((isGrounded() || doubleJump))
+                if (isGrounded())
                 {
+                    // First jump
                     rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-                    doubleJump = !doubleJump;
+                    doubleJump = true; 
+                }
+                else if (doubleJump)
+                {
+                    // Double jump
+                    rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+                    doubleJump = false; 
                 }
             }
 
@@ -92,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(horizontalInput * speed, rb.velocity.y);
         }
+
     }
 
     private void Flip()
@@ -176,4 +193,5 @@ public class PlayerMovement : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the scene
         }
     }
+
 }

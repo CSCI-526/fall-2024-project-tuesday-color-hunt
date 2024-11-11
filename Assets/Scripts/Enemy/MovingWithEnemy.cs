@@ -1,93 +1,66 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Threading;
 using UnityEngine;
 
 public class MovingWithEnemy : MonoBehaviour
 {
-    [SerializeField] private Transform initialGrabParent;
-    [SerializeField] private float x_pos;
-    [SerializeField] private float y_pos;
-
-    private bool isCollided;
-    private Rigidbody2D rb; // For 2D Rigidbody
-    private Vector3 previousPosition; // Track previous position to calculate velocity
-    private Rigidbody2D otherRb;
-    private Coroutine resetVelocityCoroutine;
+    [SerializeField] private Transform target;
+    [SerializeField] private float offsetAboveTarget;
+    [SerializeField] private float offsetAsideTarget;
+    private PlayerMovement pm;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        previousPosition = transform.position;
+        pm = FindObjectOfType<PlayerMovement>();
     }
 
     void Update()
     {
-        if (initialGrabParent && initialGrabParent.gameObject.activeInHierarchy)
+        if (target && target.gameObject.activeInHierarchy && !CompareTag("Light"))
         {
-            Vector3 offset = new Vector3(x_pos, y_pos, 0.0f);
-            transform.position = initialGrabParent.position + offset;
+            transform.position = new Vector3(target.position.x + offsetAsideTarget, target.position.y + offsetAboveTarget, target.position.z);
         }
-    }
-
-    private void FixedUpdate()
-    {
-        // Calculate the velocity based on position change
-        Vector3 currentVelocity = (transform.position - previousPosition) / Time.fixedDeltaTime;
-        previousPosition = transform.position;
-
-        // Update the Rigidbody velocity
-        if (rb != null)
+        if (pm.isGrabbing && CompareTag("Light"))
         {
-            rb.velocity = currentVelocity;
+
         }
-
-        if (isCollided)
+        else if (!pm.isGrabbing && CompareTag("Light"))
         {
-            if (otherRb != null)
-            {
-                print("ok");
-                otherRb.velocity += rb.velocity;
-            }
+            transform.position = new Vector3(target.position.x + offsetAsideTarget, target.position.y + offsetAboveTarget, target.position.z);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && !CompareTag("Light") && offsetAsideTarget == 0) 
         {
-            otherRb = collision.gameObject.GetComponent<Rigidbody2D>();
-            isCollided = true;
+            collision.transform.SetParent(transform);
+        }
+    }
 
-            // Stop any existing coroutine in case of rapid collisions
-            if (resetVelocityCoroutine != null)
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && !CompareTag("Light") && offsetAsideTarget == 0)
+        {
+            if (Input.GetAxis("Horizontal") != 0)
             {
-                StopCoroutine(resetVelocityCoroutine);
-                resetVelocityCoroutine = null;
+                collision.transform.SetParent(null);
+            }
+            else
+            {
+                collision.transform.SetParent(transform);
             }
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && !CompareTag("Light") && offsetAsideTarget == 0)
         {
-            if (otherRb != null)
-            {
-                // Start a coroutine to reset the velocity after 2 seconds
-                resetVelocityCoroutine = StartCoroutine(ResetVelocityAfterDelay(2f));
-            }
-            isCollided = false;
-        }
-    }
-
-    private IEnumerator ResetVelocityAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        if (otherRb != null)
-        {
-            otherRb.velocity = Vector2.zero; // Reset player velocity after delay
+            collision.transform.SetParent(null);
         }
     }
 }
