@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 3765394370518811662}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.252, y: 0, z: 0}
+  m_LocalPosition: {x: 0.2508, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 5716222694820931828}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.249, z: 0}
+  m_LocalPosition: {x: 0, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 2061343147475851217}
   - component: {fileID: 2780537376607024295}
   - component: {fileID: 6909591807016389713}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -301,6 +301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFacingRight: 1
   canMove: 0
+  canJump: 0
   rb: {fileID: 2780537376607024295}
   groundCheck: {fileID: 6087283529847718172}
   groundLayer:

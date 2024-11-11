@@ -30,10 +30,6 @@ public class LevelSelector : MonoBehaviour
     {
         SceneManager.LoadScene("Tutorial-5");
     }
-    public void SelectTutorial_6()
-    {
-        SceneManager.LoadScene("Tutorial-6");
-    }
 
     public void SelectMedium_1()
     {
@@ -42,6 +38,14 @@ public class LevelSelector : MonoBehaviour
     public void SelectMedium_2()
     {
         SceneManager.LoadScene("Medium-2");
+    }
+    public void SelectMedium_3()
+    {
+        SceneManager.LoadScene("Medium-3");
+    }
+    public void SelectMedium_4()
+    {
+        SceneManager.LoadScene("Medium-4");
     }
 
     public void SelectAbandonedLevel_1()

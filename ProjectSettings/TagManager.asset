@@ -16,11 +16,13 @@ TagManager:
   - Outline
   - Ladder
   - Goal
+  - MovingWithEnemy
+  - Void
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Ground
@@ -28,7 +30,7 @@ TagManager:
   - LightShades
   - Enemy
   - LightRing
-  - 
+  - Void
   - 
   - 
   - 
