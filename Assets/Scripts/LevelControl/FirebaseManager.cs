@@ -33,7 +33,7 @@ public class FirebaseManager : MonoBehaviour
         string dateTimeNow = DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
         // Create the URL with the current date and time
-        string url = $"{DatabaseUrl}ForBetaTesting/{dateTimeNow}.json?auth={authToken}";
+        string url = $"{DatabaseUrl}BetaMilestoneBuild/{dateTimeNow}.json?auth={authToken}";
 
         RestClient.Put(url, user);
     }
