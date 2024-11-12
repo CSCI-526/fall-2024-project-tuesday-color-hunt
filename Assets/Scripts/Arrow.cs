@@ -56,7 +56,19 @@ public class Arrow : MonoBehaviour
             float clampedX = Mathf.Clamp(screenPoint.x, 50, Screen.width - 50);
             float clampedY = Mathf.Clamp(screenPoint.y, 50, Screen.height - 50);
 
+            // Define a threshold range for the top-left corner
+            float cornerThreshold = 90f;
+
+            // Adjust position if arrow is near the top-left corner
+            if (clampedX <= 50 + cornerThreshold && clampedY >= Screen.height - 50 - cornerThreshold)
+            {
+                clampedX += cornerThreshold; // Move right by the threshold value
+                clampedY -= cornerThreshold; // Move down by the threshold value
+            }
+
             arrowRectTransform.position = new Vector3(clampedX, clampedY, 0);
         }
     }
+
+
 }

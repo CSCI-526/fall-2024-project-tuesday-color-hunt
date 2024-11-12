@@ -11,6 +11,7 @@ public class MovingWithEnemy : MonoBehaviour
     [SerializeField] private float offsetAboveTarget;
     [SerializeField] private float offsetAsideTarget;
     private PlayerMovement pm;
+    private bool hasGrabbed;
 
     void Start()
     {
@@ -19,17 +20,28 @@ public class MovingWithEnemy : MonoBehaviour
 
     void Update()
     {
-        if (target && target.gameObject.activeInHierarchy && !CompareTag("Light"))
+        if (pm.isGrabbing)
         {
-            transform.position = new Vector3(target.position.x + offsetAsideTarget, target.position.y + offsetAboveTarget, target.position.z);
+            hasGrabbed = true;
         }
-        if (pm.isGrabbing && CompareTag("Light"))
-        {
 
-        }
-        else if (!pm.isGrabbing && CompareTag("Light"))
+        if (target && target.gameObject.activeInHierarchy)
         {
-            transform.position = new Vector3(target.position.x + offsetAsideTarget, target.position.y + offsetAboveTarget, target.position.z);
+            if (!CompareTag("Light"))
+            {
+                transform.position = new Vector3(target.position.x + offsetAsideTarget, target.position.y + offsetAboveTarget, target.position.z);
+            }
+            else
+            {
+                if (hasGrabbed)
+                {
+
+                }
+                else
+                {
+                    transform.position = new Vector3(target.position.x + offsetAsideTarget, target.position.y + offsetAboveTarget, target.position.z);
+                }
+            }
         }
     }
 
