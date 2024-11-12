@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public bool isPaused;
     public bool isCleared;
     private int pageNum;
+    private int previousValue;
 
     void Start()
     {
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1f;
             helpText.SetActive(true);
         }
-        //pm.enabled = false;
+        previousValue = PlayerPrefs.GetInt("lightMixedCount", 0);
         pageNum = 0;
     }
 
@@ -79,9 +80,17 @@ public class GameManager : MonoBehaviour
                     
                 }
             }
+
+            int currentValue = PlayerPrefs.GetInt("lightMixedCount", 0);
+            if (currentValue != previousValue)
+            {
+                string savedStringForColorMixLocation = PlayerPrefs.GetString("ColorMixedLocation", "0");
+                PlayerPrefs.SetString("ColorMixedLocation", pm.getCurrentPos().ToString() + ";" + savedStringForColorMixLocation);
+                PlayerPrefs.Save();
+                previousValue = currentValue;
+            }
         }
 
-        
         
     }
 
@@ -119,8 +128,8 @@ public class GameManager : MonoBehaviour
 
     public void RestartButton()
     {
-        string savedString = PlayerPrefs.GetString("TimeSpent", "0");
-        double savedTimeSpent = double.Parse(savedString);
+        string savedStringForTimeSpent = PlayerPrefs.GetString("TimeSpent", "0");
+        double savedTimeSpent = double.Parse(savedStringForTimeSpent);
 
         double currentTimeSpent = Time.time - fm.levelStartTime + savedTimeSpent;
         PlayerPrefs.SetString("TimeSpent", currentTimeSpent.ToString());
@@ -129,6 +138,10 @@ public class GameManager : MonoBehaviour
         int restartCount = PlayerPrefs.GetInt("RestartCount", 0);
         restartCount++;
         PlayerPrefs.SetInt("RestartCount", restartCount);
+        PlayerPrefs.Save();
+
+        string savedStringForRestartLocation = PlayerPrefs.GetString("RestartLocation", "0");
+        PlayerPrefs.SetString("RestartLocation", pm.getCurrentPos().ToString() + ";" + savedStringForRestartLocation);
         PlayerPrefs.Save();
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -151,17 +164,33 @@ public class GameManager : MonoBehaviour
 
     public void MainMenuButton()
     {
-        PlayerPrefs.SetInt("DeathCount", 0);
+        //also reset in firebase manager
+        PlayerPrefs.SetInt("DeathCount", 0);//in game manager
         PlayerPrefs.Save();
 
-        PlayerPrefs.SetInt("lightToggleCount", 0);
-        PlayerPrefs.Save();
-
-        PlayerPrefs.SetInt("lightMixedCount", 0);
+        PlayerPrefs.SetInt("lightMixedCount", 0);//in light switch
         PlayerPrefs.Save();
 
         double zeroTime = 0.0;
         PlayerPrefs.SetString("TimeSpent", zeroTime.ToString());
+        PlayerPrefs.Save();
+
+        PlayerPrefs.SetInt("RestartCount", 0);//in game manager
+        PlayerPrefs.Save();
+
+        PlayerPrefs.SetString("RestartLocation", "");//in game manager
+        PlayerPrefs.Save();
+
+        PlayerPrefs.SetString("DeathLocation", "");//in player movement
+        PlayerPrefs.Save();
+
+        PlayerPrefs.SetInt("EnemyTrappedCount", 0);//in enemy patrol
+        PlayerPrefs.Save();
+
+        PlayerPrefs.SetInt("EnemyKilledCount", 0);//in light shades
+        PlayerPrefs.Save();
+
+        PlayerPrefs.SetString("ColorMixedLocation", "");//in light switch
         PlayerPrefs.Save();
 
         SceneManager.LoadScene("LevelSelection");

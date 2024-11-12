@@ -19,18 +19,37 @@ public class EnemyPatrol : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    public bool enemyInsideDome = false;
-
+    private bool enemyWasInsideDome = false;
+    private bool enemyInsideDome;
     [SerializeField] private bool patrolVoid;
+    private ColorControl cc;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        cc = FindObjectOfType<ColorControl>();
     }
 
     void Update()
     {
         Patrol();
+
+        bool currentlyInsideDome = hittingShades();
+
+        if (currentlyInsideDome != enemyWasInsideDome)
+        {
+            enemyInsideDome = currentlyInsideDome;
+
+            if (enemyInsideDome)
+            {
+                int enemyTrappedCount = PlayerPrefs.GetInt("EnemyTrappedCount", 0);
+                enemyTrappedCount++;
+                PlayerPrefs.SetInt("EnemyTrappedCount", enemyTrappedCount);
+                PlayerPrefs.Save();
+            }
+
+            enemyWasInsideDome = currentlyInsideDome;
+        }
     }
 
     private void Patrol()

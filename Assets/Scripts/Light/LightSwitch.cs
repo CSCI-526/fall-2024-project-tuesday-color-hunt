@@ -16,9 +16,11 @@ public class LightSwitch : MonoBehaviour
     private List<GameObject> lightSwitchesToBeAdded = new List<GameObject>();
 
     private int lightMixedCount;
+    private PlayerMovement pm;
 
     void Start()
     {
+        pm = FindObjectOfType<PlayerMovement>();
         cc = FindObjectOfType<ColorControl>();
         parentScript = transform.parent.GetComponent<LightParent>();
         lightShades = transform.parent.transform.Find("LightShades").gameObject;
@@ -32,6 +34,7 @@ public class LightSwitch : MonoBehaviour
                 lightSwitches.Add(obj);
             }
         }
+
         lightMixedCount = PlayerPrefs.GetInt("lightMixedCount", 0);
     }
 

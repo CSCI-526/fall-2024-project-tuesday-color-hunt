@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -190,8 +191,16 @@ public class PlayerMovement : MonoBehaviour
             PlayerPrefs.SetInt("DeathCount", deathCount);
             PlayerPrefs.Save();
 
+            string savedStringForDeathLocation = PlayerPrefs.GetString("DeathLocation", "0");
+            PlayerPrefs.SetString("DeathLocation", getCurrentPos().ToString() + ";" + savedStringForDeathLocation);
+            PlayerPrefs.Save();
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the scene
         }
     }
 
+    public Vector2 getCurrentPos()
+    {
+        return new Vector2(transform.position.x, transform.position.y);
+    }
 }

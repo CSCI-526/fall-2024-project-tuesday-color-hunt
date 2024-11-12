@@ -9,7 +9,6 @@ public class LightShades : MonoBehaviour
 {
     private ColorControl cc;
     private List<GameObject> objectsCollided = new List<GameObject>();
-    private List<GameObject> objectsInDome = new List<GameObject>();
 
     void Start()
     {
@@ -24,22 +23,33 @@ public class LightShades : MonoBehaviour
             if (obj.GetComponent<SpriteRenderer>())
             {
                 Color objectColor = obj.GetComponent<SpriteRenderer>().color;
-                if (obj.CompareTag("Enemy") || obj.CompareTag("Obstacle"))
+                if (cc.CompareColors(objectColor, GetComponent<SpriteRenderer>().color))
                 {
-                    if (cc.CompareColors(objectColor, GetComponent<SpriteRenderer>().color))
+                    if (obj.CompareTag("Enemy"))
+                    {
+                        obj.SetActive(false);
+
+                        int enemyKilledCount = PlayerPrefs.GetInt("EnemyKilledCount", 0);
+                        enemyKilledCount++;
+                        PlayerPrefs.SetInt("EnemyKilledCount", enemyKilledCount);
+                        PlayerPrefs.Save();
+
+                        if (CompareTag("LightShades"))
+                        {
+                            int enemyTrappedCount = PlayerPrefs.GetInt("EnemyTrappedCount", 0);
+                            if (enemyTrappedCount != 0)
+                            {
+                                enemyTrappedCount--;
+                            }
+                            PlayerPrefs.SetInt("EnemyTrappedCount", enemyTrappedCount);
+                            PlayerPrefs.Save();
+                        }
+                    }
+                    if (obj.CompareTag("Obstacle"))
                     {
                         obj.SetActive(false);
                     }
                 }
-                else if (obj.CompareTag("Enemy") && !cc.CompareColors(objectColor, GetComponent<SpriteRenderer>().color)) 
-                {
-                    if (gameObject.CompareTag("LightShades"))
-                    {
-                        obj.GetComponent<EnemyPatrol>().enemyInsideDome = true;
-                        objectsInDome.Add(obj);
-                    }
-                }
-
             }
         }
     }
@@ -55,6 +65,5 @@ public class LightShades : MonoBehaviour
         {
             objectsCollided.Remove(collision.gameObject);
         }
-        
     }
 }
