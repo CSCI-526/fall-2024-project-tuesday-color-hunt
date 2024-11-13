@@ -1855,7 +1855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1269614205}
   offsetAboveTarget: 0
-  offsetAsideTarget: 1.3
+  offsetAsideTarget: 1.5
 --- !u!1 &1059886538
 GameObject:
   m_ObjectHideFlags: 0
@@ -2226,7 +2226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1524454969}
   offsetAboveTarget: 0
-  offsetAsideTarget: 1.3
+  offsetAsideTarget: 1.5
 --- !u!1001 &1259490372
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3008,11 +3008,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5348319810516665676, guid: 9730ec70886ff7c40a953f58d38d0fb9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.45
+      value: 11.52
       objectReference: {fileID: 0}
     - target: {fileID: 5348319810516665676, guid: 9730ec70886ff7c40a953f58d38d0fb9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.76
+      value: 1.89
       objectReference: {fileID: 0}
     - target: {fileID: 5348319810516665676, guid: 9730ec70886ff7c40a953f58d38d0fb9, type: 3}
       propertyPath: m_LocalPosition.z
