@@ -48,9 +48,9 @@ public class LevelSelector : MonoBehaviour
         SceneManager.LoadScene("Medium-4");
     }
 
-    public void SelectAbandonedLevel_1()
+    public void SelectTest()
     {
-        SceneManager.LoadScene("Abandoned-1");
+        SceneManager.LoadScene("Test");
     }
     
 
