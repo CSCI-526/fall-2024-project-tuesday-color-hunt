@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 wallJumpingPower = new Vector2(8f, 16f);
 
     private BoxCollider2D boxCollider;
+    private Vector2 respawnPosition; 
     [SerializeField] private Transform startPosition;
 
     private Camera mainCamera;
@@ -51,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         Cursor.visible = false;
         //fm = FindObjectOfType<FirebaseManager>();
-
+        respawnPosition = transform.position;
         // Load deathCount from PlayerPrefs
         deathCount = PlayerPrefs.GetInt("DeathCount", 0);
     }
@@ -195,7 +196,30 @@ public class PlayerMovement : MonoBehaviour
             PlayerPrefs.SetString("DeathLocation", getCurrentPos().ToString() + ";" + savedStringForDeathLocation);
             PlayerPrefs.Save();
 
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the scene
+            Respawn();
+
+            // SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the scene
+        }
+    }
+
+    public void Respawn()
+    {
+        transform.position = respawnPosition;
+        rb.velocity = Vector2.zero; // Reset velocity to avoid carrying over momentum
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Checkpoint"))
+        {
+            Vector3 checkpointPosition = collision.transform.position;
+            respawnPosition = new Vector2(checkpointPosition.x, checkpointPosition.y + 1.5f); 
+            SpriteRenderer checkpointSprite = collision.GetComponent<SpriteRenderer>();
+            if (checkpointSprite != null)
+            {
+                checkpointSprite.color = Color.yellow; 
+            }
+            Debug.Log("Checkpoint updated!");
         }
     }
 

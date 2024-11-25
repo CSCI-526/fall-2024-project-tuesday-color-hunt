@@ -18,6 +18,7 @@ TagManager:
   - Goal
   - MovingWithEnemy
   - Void
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
