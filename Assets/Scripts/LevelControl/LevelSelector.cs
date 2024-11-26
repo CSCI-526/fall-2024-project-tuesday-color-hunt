@@ -10,6 +10,11 @@ public class LevelSelector : MonoBehaviour
         Cursor.visible = true;
     }
 
+    public void SelectTutorial_all()
+    {
+        SceneManager.LoadScene("Tutorial-all");
+    }
+
     public void SelectTutorial_1()
     {
         SceneManager.LoadScene("Tutorial-1");

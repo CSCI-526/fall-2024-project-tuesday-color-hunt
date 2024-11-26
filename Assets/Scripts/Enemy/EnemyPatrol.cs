@@ -100,7 +100,7 @@ public class EnemyPatrol : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             Flip();
         }

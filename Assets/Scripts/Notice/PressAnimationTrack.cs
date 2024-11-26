@@ -9,7 +9,8 @@ public class PressAnimationTrack : MonoBehaviour
     public GameObject arrow;
     public GameObject pressK;
     public GameObject pressL;
-    public GameObject slash;
+
+    private GameObject pressButton;
 
     private float offsetAboveTarget = 1.2f; // Distance above the target object
     private bool isStartColor = true;
@@ -20,51 +21,99 @@ public class PressAnimationTrack : MonoBehaviour
     private Color buttonStartColor = new Color(150f / 255f, 150f / 255f, 150f / 255f, 1f);
     private Color endColor = new Color(50f / 255f, 50f / 255f, 50f / 255f, 1f);
 
-    private PlayerMovement pm;
+    private bool howToToggleLight;
 
     void Start()
     {
-        pm = FindObjectOfType<PlayerMovement>();
         arrow.SetActive(true);
+        pressButton = pressK;
+        pressButton.SetActive(true);
     }
 
     void Update()
     {
-        if (pm.isGrabbing)
+        if (target.parent != null)
         {
+            pressButton.SetActive(false);
             arrow.SetActive(false);
-            pressK.SetActive(false);
-            pressL.SetActive(false);
-            slash.SetActive(false);
         }
         else
         {
-            arrow.SetActive(true);
-            pressK.SetActive(true);
-            pressL.SetActive(true);
-            slash.SetActive(true);
+            if (!howToToggleLight)
+            {
+                pressButton.SetActive(true);
+                pressButton = pressK;
+                pressK.SetActive(true);
+                pressL.SetActive(false);
+                arrow.SetActive(true);
+            }
         }
+
+        if (howToToggleLight)
+        {
+            if (target.GetComponent<LightParent>())
+            {
+                if (target.GetComponent<LightParent>().lighted)
+                {
+                    pressButton.SetActive(false);
+                    arrow.SetActive(false);
+                }
+                else
+                {
+                    pressButton.SetActive(true);
+                    pressButton = pressL;
+                    pressK.SetActive(false);
+                    pressL.SetActive(true);
+                    arrow.SetActive(true);
+                }
+            }
+            
+        }
+
 
         if (target != null && arrow.activeInHierarchy)
         {
-            // Set the position to be directly above the target with the specified offset
+            // Position the arrow and button above the target
             arrow.transform.position = new Vector3(target.position.x, target.position.y + offsetAboveTarget, target.position.z);
-            pressK.transform.position = new Vector3(target.position.x -1f, target.position.y + offsetAboveTarget + 1.2f, target.position.z);
-            pressL.transform.position = new Vector3(target.position.x +1f, target.position.y + offsetAboveTarget + 1.2f, target.position.z);
-            slash.transform.position = new Vector3(target.position.x, target.position.y - 17.2f, target.position.z);
+            pressButton.transform.position = new Vector3(target.position.x, target.position.y + offsetAboveTarget + 1.2f, target.position.z);
 
             timer += Time.deltaTime;
 
-            // Check if the switch interval has been reached
+            // Switch colors at intervals
             if (timer >= switchInterval)
             {
-                // Switch colors
                 arrow.GetComponent<SpriteRenderer>().color = isStartColor ? endColor : arrowStartColor;
-                pressK.GetComponent<SpriteRenderer>().color = isStartColor ? endColor : buttonStartColor;
-                pressL.GetComponent<SpriteRenderer>().color = isStartColor ? endColor : buttonStartColor;
+                pressButton.GetComponent<SpriteRenderer>().color = isStartColor ? endColor : buttonStartColor;
 
                 isStartColor = !isStartColor;
                 timer = 0f; // Reset the timer
+            }
+        }
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "LightSwitch")
+        {
+            if ((CompareTag("RedLightNotice") && collision.gameObject.transform.parent.gameObject.name == "RedLight")
+            || (CompareTag("GreenLightNotice") && collision.gameObject.transform.parent.gameObject.name == "GreenLight"))
+            {
+                howToToggleLight = true;
+            }
+        }
+        
+
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "LightSwitch")
+        {
+            if ((CompareTag("RedLightNotice") && collision.gameObject.transform.parent.gameObject.name == "RedLight")
+            || (CompareTag("GreenLightNotice") && collision.gameObject.transform.parent.gameObject.name == "GreenLight"))
+            {
+                howToToggleLight = false;
             }
         }
     }

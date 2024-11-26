@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 wallJumpingPower = new Vector2(8f, 16f);
 
     private BoxCollider2D boxCollider;
-    private Vector2 respawnPosition; 
+    public Vector3 respawnPosition; 
     [SerializeField] private Transform startPosition;
 
     private Camera mainCamera;
@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     private FirebaseManager fm;
     private int deathCount;
 
+    public bool reachCheck;
 
     // Start is called before the first frame update
     private void Awake()
@@ -206,21 +207,6 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.position = respawnPosition;
         rb.velocity = Vector2.zero; // Reset velocity to avoid carrying over momentum
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Checkpoint"))
-        {
-            Vector3 checkpointPosition = collision.transform.position;
-            respawnPosition = new Vector2(checkpointPosition.x, checkpointPosition.y + 1.5f); 
-            SpriteRenderer checkpointSprite = collision.GetComponent<SpriteRenderer>();
-            if (checkpointSprite != null)
-            {
-                checkpointSprite.color = Color.yellow; 
-            }
-            Debug.Log("Checkpoint updated!");
-        }
     }
 
     public Vector2 getCurrentPos()

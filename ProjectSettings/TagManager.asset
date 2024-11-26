@@ -19,6 +19,8 @@ TagManager:
   - MovingWithEnemy
   - Void
   - Checkpoint
+  - RedLightNotice
+  - GreenLightNotice
   layers:
   - Default
   - TransparentFX
