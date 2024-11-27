@@ -1897,6 +1897,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: RestartButton
       objectReference: {fileID: 0}
+    - target: {fileID: 736513666243223718, guid: 85eccd2377ac1e742972500fb0a77a2a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1591268202}
+    - target: {fileID: 736513666243223718, guid: 85eccd2377ac1e742972500fb0a77a2a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResumeGame
+      objectReference: {fileID: 0}
     - target: {fileID: 3244595702918290151, guid: 85eccd2377ac1e742972500fb0a77a2a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1945,6 +1953,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8167401595482762339, guid: 85eccd2377ac1e742972500fb0a77a2a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1591268202}
+    - target: {fileID: 8167401595482762339, guid: 85eccd2377ac1e742972500fb0a77a2a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResumeGame
+      objectReference: {fileID: 0}
     - target: {fileID: 8352583691382273507, guid: 85eccd2377ac1e742972500fb0a77a2a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1960,6 +1976,14 @@ PrefabInstance:
     - target: {fileID: 8715742074526601719, guid: 85eccd2377ac1e742972500fb0a77a2a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ColorSchemeButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786123193363405029, guid: 85eccd2377ac1e742972500fb0a77a2a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1591268202}
+    - target: {fileID: 8786123193363405029, guid: 85eccd2377ac1e742972500fb0a77a2a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BackToSelectionButton
       objectReference: {fileID: 0}
     - target: {fileID: 8879739303560312404, guid: 85eccd2377ac1e742972500fb0a77a2a, type: 3}
       propertyPath: m_Pivot.x

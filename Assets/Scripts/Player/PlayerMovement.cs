@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform groundCheck2;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
@@ -46,6 +47,10 @@ public class PlayerMovement : MonoBehaviour
 
     public bool reachCheck;
 
+    private Dictionary<GameObject, bool> obstacleStates = new Dictionary<GameObject, bool>();
+    private Dictionary<GameObject, bool> enemyStates = new Dictionary<GameObject, bool>();
+    private Dictionary<GameObject, Vector3> lightPositions = new Dictionary<GameObject, Vector3>();
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -56,6 +61,24 @@ public class PlayerMovement : MonoBehaviour
         respawnPosition = transform.position;
         // Load deathCount from PlayerPrefs
         deathCount = PlayerPrefs.GetInt("DeathCount", 0);
+
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.CompareTag("Obstacle"))
+            {
+                obstacleStates[obj] = obj.activeInHierarchy;
+            }
+            if (obj.CompareTag("Enemy"))
+            {
+                enemyStates[obj] = obj.activeInHierarchy;
+            }
+            if (obj.CompareTag("Light"))
+            {
+                lightPositions[obj] = obj.transform.position;
+            }
+        }
+
     }
 
     // Update is called once per frame
@@ -127,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer) || Physics2D.OverlapCircle(groundCheck2.position, 0.2f, groundLayer);
     }
 
     private void WallSlide()
@@ -206,7 +229,53 @@ public class PlayerMovement : MonoBehaviour
     public void Respawn()
     {
         transform.position = respawnPosition;
-        rb.velocity = Vector2.zero; // Reset velocity to avoid carrying over momentum
+        rb.velocity = Vector2.zero;
+
+        foreach (var obstacle in obstacleStates)
+        {
+            if (obstacle.Key != null)
+            {
+                obstacle.Key.SetActive(obstacle.Value);
+            }
+        }
+
+        foreach (var enemy in enemyStates)
+        {
+            if (enemy.Key != null)
+            {
+                enemy.Key.SetActive(enemy.Value);
+            }
+        }
+
+        // Restore the positions of all lights
+        foreach (var light in lightPositions)
+        {
+            if (light.Key != null)
+            {
+                light.Key.transform.position = light.Value;
+                light.Key.transform.parent = null;
+            }
+        }
+    }
+
+    public void SaveGameState()
+    {
+        respawnPosition = transform.position;
+
+        foreach (var obstacle in obstacleStates.Keys)
+        {
+            obstacleStates[obstacle] = obstacle.activeInHierarchy;
+        }
+
+        foreach (var enemy in enemyStates.Keys)
+        {
+            enemyStates[enemy] = enemy.activeInHierarchy;
+        }
+
+        foreach (var light in lightPositions.Keys)
+        {
+            lightPositions[light] = light.transform.position;
+        }
     }
 
     public Vector2 getCurrentPos()

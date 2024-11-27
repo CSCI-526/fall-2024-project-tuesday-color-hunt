@@ -35,6 +35,8 @@ public class Checkpoint : MonoBehaviour
             {
                 checkpointSprite.sprite = newCheckpoint;
             }
+
+            pm.SaveGameState();
         }
     }
 }
