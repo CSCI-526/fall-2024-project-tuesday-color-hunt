@@ -50,7 +50,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6906758138812214338
 Transform:
   m_ObjectHideFlags: 0
@@ -223,7 +223,6 @@ MonoBehaviour:
   groundCheck: {fileID: 3650143373100349407}
   wallCheck: {fileID: 8568097752641019395}
   player: {fileID: 0}
-  enemyInsideDome: 0
   patrolVoid: 0
 --- !u!1 &5417557757458589870
 GameObject:

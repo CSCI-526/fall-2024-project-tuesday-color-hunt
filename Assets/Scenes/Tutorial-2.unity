@@ -664,6 +664,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2921844639464387524, guid: 7ea8c37cd9e584a47b16b7d1421e8705, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6906758138812214338, guid: 7ea8c37cd9e584a47b16b7d1421e8705, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.58176
@@ -1656,6 +1660,10 @@ PrefabInstance:
     - target: {fileID: 4081836881470315328, guid: a95794d3a89dfbd4798a6399c7278d6a, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4081836881470315328, guid: a95794d3a89dfbd4798a6399c7278d6a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5806615170969667250, guid: a95794d3a89dfbd4798a6399c7278d6a, type: 3}
       propertyPath: m_Color.b

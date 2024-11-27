@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     private Dictionary<GameObject, bool> obstacleStates = new Dictionary<GameObject, bool>();
     private Dictionary<GameObject, bool> enemyStates = new Dictionary<GameObject, bool>();
     private Dictionary<GameObject, Vector3> lightPositions = new Dictionary<GameObject, Vector3>();
+    private Dictionary<GameObject, bool> lightStatus = new Dictionary<GameObject, bool>();
 
     // Start is called before the first frame update
     private void Awake()
@@ -62,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
         // Load deathCount from PlayerPrefs
         deathCount = PlayerPrefs.GetInt("DeathCount", 0);
 
-        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        GameObject[] allObjects = FindObjectsOfType<GameObject>();
         foreach (GameObject obj in allObjects)
         {
             if (obj.CompareTag("Obstacle"))
@@ -76,7 +77,9 @@ public class PlayerMovement : MonoBehaviour
             if (obj.CompareTag("Light"))
             {
                 lightPositions[obj] = obj.transform.position;
+                lightStatus[obj] = obj.transform.GetComponent<LightParent>().lighted;
             }
+
         }
 
     }
@@ -247,7 +250,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // Restore the positions of all lights
         foreach (var light in lightPositions)
         {
             if (light.Key != null)
@@ -256,27 +258,54 @@ public class PlayerMovement : MonoBehaviour
                 light.Key.transform.parent = null;
             }
         }
+
+        foreach (var light in lightStatus)
+        {
+            if (light.Key != null)
+            {
+                LightParent lightParent = light.Key.GetComponent<LightParent>();
+                if (lightParent != null)
+                {
+                    lightParent.lighted = light.Value;
+                }
+            }
+        }
     }
+
 
     public void SaveGameState()
     {
-        respawnPosition = transform.position;
+        // Clear existing data
+        obstacleStates.Clear();
+        enemyStates.Clear();
+        lightPositions.Clear();
+        lightStatus.Clear();
 
-        foreach (var obstacle in obstacleStates.Keys)
+        // Find all current game objects
+        GameObject[] allObjects = FindObjectsOfType<GameObject>();
+        foreach (GameObject obj in allObjects)
         {
-            obstacleStates[obstacle] = obstacle.activeInHierarchy;
-        }
-
-        foreach (var enemy in enemyStates.Keys)
-        {
-            enemyStates[enemy] = enemy.activeInHierarchy;
-        }
-
-        foreach (var light in lightPositions.Keys)
-        {
-            lightPositions[light] = light.transform.position;
+            if (obj.CompareTag("Obstacle"))
+            {
+                obstacleStates[obj] = obj.activeInHierarchy;
+            }
+            if (obj.CompareTag("Enemy"))
+            {
+                enemyStates[obj] = obj.activeInHierarchy;
+            }
+            if (obj.CompareTag("Light"))
+            {
+                lightPositions[obj] = obj.transform.position;
+                LightParent lightParent = obj.GetComponent<LightParent>();
+                if (lightParent != null)
+                {
+                    lightStatus[obj] = lightParent.lighted;
+                }
+            }
         }
     }
+
+
 
     public Vector2 getCurrentPos()
     {

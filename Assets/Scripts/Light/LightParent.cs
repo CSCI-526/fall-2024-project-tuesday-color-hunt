@@ -59,6 +59,17 @@ public class LightParent : MonoBehaviour
                 }
             }
         }
+
+        if (lighted)
+        {
+            LightShades.SetActive(true);
+            LightRing.SetActive(true);
+        }
+        else
+        {
+            LightShades.SetActive(false);
+            LightRing.SetActive(false);
+        }
     }
 
     private void GrabObject()
