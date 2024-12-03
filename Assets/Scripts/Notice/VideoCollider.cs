@@ -6,6 +6,7 @@ using UnityEngine.Video;
 public class VideoCollider : MonoBehaviour
 {
     [SerializeField] private VideoPlayer videoPlayer;
+    [SerializeField] private VideoPlayer videoPlayer2;
     [SerializeField] private GameObject demo;
     private PlayerMovement pm;
     [SerializeField] private GameObject helpText;
@@ -22,12 +23,16 @@ public class VideoCollider : MonoBehaviour
                 Time.timeScale = 0f;
                 Cursor.visible = true;
                 pm.enabled = false;
-                videoPlayer.isLooping = true;
                 helpText.SetActive(false);
                 demo.SetActive(true);
+
+                videoPlayer.isLooping = true;
                 videoPlayer.url = System.IO.Path.Combine(Application.streamingAssetsPath, "demoUnity.mp4");
                 videoPlayer.loopPointReached += OnVideoEnd;
 
+                videoPlayer2.isLooping = true;
+                videoPlayer2.url = System.IO.Path.Combine(Application.streamingAssetsPath, "demoUnity2.mp4");
+                videoPlayer2.loopPointReached += OnVideoEnd;
                 enteredOnce = true;
             }
             
